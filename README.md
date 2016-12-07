@@ -49,6 +49,10 @@ What did you use to build it, list the technologies, plugins, gems, packages etc
 
 * [jQuery](http://jquery.com/) - jQuery for example is something you likely used
 
+## Workflow
+
+Did you write user stories, draw wireframes, use task tracking, produce ERDs? Did you use source control, with regular commits? Include links to them here.
+
 ## Authors
 
 Did you collaborate with others on this project, list them here
