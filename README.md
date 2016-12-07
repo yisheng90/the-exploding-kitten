@@ -1,14 +1,14 @@
-# Project #1: [Your Game Name]
+# Your Project Name
 
-This is the starter code for project 1 - [specfification here](https://jeremiahalex.gitbooks.io/wdi-sg/content/11-projects/project-1/readme.html). Please update this README file with information specific to your project. Replace this paragraph with a short description of your project. Then update the sections below. Read the specificaion above for detailed
+This is the starter code for WDI projects. Please update this README file with information specific to your project. Replace this paragraph for instance, with a short description of your project. Then update the sections below. Refer to your project specificaion for instructions on how to submit your projects.
 
 ## Getting Started
 
-Provide instructions here about how to get your project running on our local machine. Do we just need to clone and open a certain file or do we need to install specific 
+Provide instructions here about how to get your project running on our local machine. Do we just need to clone and open a certain file or do we need to install anything first.
 
 ### Prerequisites
 
-What things are needed to install and run the project, how do we install them
+What is needed to install and run the project, how do we install them
 
 ```
 Code example
