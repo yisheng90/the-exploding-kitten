@@ -1,0 +1,249 @@
+// This describe the cards constructor
+var game = {
+  player1Cards: [],
+  player2Cards: [],
+  remainingCards: [],
+  playedCards: [],
+  startGame: startGame,
+  currentPlayer: 1,
+  noOfPlayers: 2,
+  isGameOver: false,
+  whoWon: 0
+}
+
+function Cards () {
+  this.type = 'normal'
+  this.render
+}
+
+function ShuffleCards () {
+  this.type = 'Shuffle'
+  this.render
+}
+
+function ExplodingKittenCards () {
+  this.type = 'kitten'
+  this.render
+}
+
+function DefuseCards () {
+  this.type = 'Defuse'
+  this.render
+}
+
+function SkipCards () {
+  this.type = 'Skip'
+  this.render
+}
+
+function AttackCards () {
+  this.type = 'Attack'
+  this.render
+}
+
+function SeeTheFutureCards () {
+  this.type = 'See The Future'
+  this.render
+}
+
+ShuffleCards.prototype.render = function () {
+  shuffle()
+}
+
+SeeTheFutureCards.prototype.render = function () {
+  console.log('SeeTheFuture Started')
+  var topThreeCards = game.remainingCards.slice(0, 3)
+  alert(JSON.stringify(topThreeCards))
+}
+
+SkipCards.prototype.render = function () {
+  console.log('Skip Cards Started')
+  if (game.currentPlayer < game.noOfPlayers) {
+    game.currentPlayer += 1
+  } else {
+    game.currentPlayer = 1
+  }
+  console.log(game.currentPlayer)
+}
+/* var card1 = new ShuffleCards()
+var future = new SeeTheFutureCards()
+var skip = new SkipCards()
+card1.render()
+future.render()
+skip.render()
+skip.render() */
+
+DefuseCards.prototype.render = function () {
+  clearInterval(countDown)
+  hideExplosive()
+  if (game.remainingCards[0].type === 'kitten') {
+    shuffle()
+  }
+  game.currentPlayer = 3 - game.currentPlayer
+}
+
+AttackCards.prototype.render = function () {
+  console.log('Attack Cards Started')
+  if (game.currentPlayer < game.noOfPlayers) {
+    game.currentPlayer += 1
+  } else {
+    game.currentPlayer = 1
+  }
+  console.log(game.currentPlayer)
+}
+
+var countDown
+ExplodingKittenCards.prototype.render = function () {
+  console.log('Exploding')
+  showExplosive()
+  var time = 10
+  countDown = setInterval(function () {
+    time -= 0.1
+    console.log(time)
+    if (time <= 0) {
+      clearInterval(countDown)
+      game.isGameOver = true
+      game.whoWon = 3 - game.currentPlayer
+      isGameOver()
+    }
+  }, 100)
+}
+
+// Game Methods
+function startGame () {
+  for (var i = 0; i < 4; i++) {
+    game.remainingCards.push(new ShuffleCards())
+    game.remainingCards.push(new SkipCards())
+    game.remainingCards.push(new SeeTheFutureCards())
+    game.remainingCards.push(new AttackCards())
+    if (i === 3) {
+      game.remainingCards.push(new DefuseCards())
+    }
+  }
+
+  shuffle()
+  for (var i = 0; i < 4; i++) {
+    game.player1Cards.push(game.remainingCards[i])
+    game.remainingCards.shift()
+  }
+
+  for (var i = 0; i < 4; i++) {
+    game.player2Cards.push(game.remainingCards[i])
+    game.remainingCards.shift()
+  }
+
+  game.player1Cards.push(new DefuseCards())
+  game.player2Cards.push(new DefuseCards())
+  game.remainingCards.push(new ExplodingKittenCards())
+  shuffle()
+
+  console.log(game)
+}
+
+function shuffle () {
+  var i = game.remainingCards.length - 1
+  while (i > 0) {
+    num = Math.floor(Math.random() * game.remainingCards.length)
+    var temp = game.remainingCards[i]
+    game.remainingCards[i] = game.remainingCards[num]
+    game.remainingCards[num] = temp
+    i--
+  }
+  console.log(game.remainingCards)
+}
+
+function playTurn (choice) {
+  if (game.isGameOver === false) {
+    //console.log('Player', game.currentPlayer, 'playTurn')
+    //console.log('choice', choice)
+    //console.log(game['player' + game.currentPlayer + 'Cards'][choice])
+    game.playedCards.push(game['player' + game.currentPlayer + 'Cards'][choice])
+    game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
+    game['playedCards'][game.playedCards.length - 1].render()
+  //  console.log(game['player' + game.currentPlayer + 'Cards'])
+    //console.log(game.playedCards)
+    //console.log('renderSuccessful')
+  }
+}
+
+function drawCard () {
+  console.log('Player', game.currentPlayer, 'drawCard')
+  if (game.remainingCards[0].type === 'kitten') {
+    game.remainingCards[0].render()
+  } else {
+    game['player' + game.currentPlayer + 'Cards'].push(game.remainingCards[0])
+    game.remainingCards.shift()
+    game.currentPlayer = 3 - game.currentPlayer
+  }
+}
+
+function isGameOver () {
+  if (game.isGameOver === true) {
+    alert('Game Over')
+  }
+}
+
+$(document).ready(function () {
+  startGame()
+  for (var i = 0; i < game.player1Cards.length; i++) {
+    $('.player1').append('<button>' + game.player1Cards[i].type + '</button>')
+  }
+  for (var i = 0; i < game.player2Cards.length; i++) {
+    $('.player2').append('<button>' + game.player2Cards[i].type + '</button>')
+  }
+
+  $('.player1').off('click', 'button')
+  $('.player1').on('click', 'button', function () {
+    var index = $('.player1 button').index(this)
+    alert('index ' + index)
+    if (game.currentPlayer === 1 && game.isGameOver === false) {
+      playTurn((index))
+    } else {
+      alert('It is not your turn!')
+    }
+    updateDisplay()
+  })
+
+  $('.player2').off('click', 'button')
+  $('.player2').on('click', 'button', function () {
+    var index = $('.player2 button').index(this)
+    console.log(index)
+    if (game.currentPlayer === 2 && game.isGameOver === false) {
+      playTurn((index))
+    } else {
+      alert('It is not your turn!')
+    }
+    updateDisplay()
+  })
+
+  $('.remaining-cards').click(function () {
+    drawCard()
+    updateDisplay()
+  })
+})
+
+function updateDisplay () {
+  if (game.playedCards.length > 0) {
+    $('.played-cards').text(game.playedCards[game.playedCards.length - 1].type)
+  }
+
+  $('.player1 button').remove()
+  $('.player2 button').remove()
+  for (var i = 0; i < game.player1Cards.length; i++) {
+    $('.player1').append('<button>' + game.player1Cards[i].type + '</button>')
+  }
+  for (var i = 0; i < game.player2Cards.length; i++) {
+    $('.player2').append('<button>' + game.player2Cards[i].type + '</button>')
+  }
+}
+
+function showExplosive () {
+  $('.explosive').text('Explosive Kitten')
+  .fadeIn()
+}
+
+function hideExplosive () {
+  $('.explosive').hide()
+  updateDisplay()
+}
+// console.log(cards[0]);

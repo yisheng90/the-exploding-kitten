@@ -1,0 +1,48 @@
+body {
+  background: url('./img/background.jpg');
+  background-size: cover;
+}
+.remaining-cards {
+  position: absolute;
+  top: 30%;
+  left: 25%;
+  height: 250px;
+  width: 200px;
+  background: red;
+  border-radius: 20px;
+}
+
+.played-cards {
+  position: absolute;
+  top: 30%;
+  left: 55%;
+  height: 250px;
+  width: 200px;
+    border-radius: 20px;
+}
+
+.dotted-border {
+  border: 2px dashed white;
+}
+
+button {
+  height: 100px;
+  width: 100px;
+}
+
+.player1 {
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+}
+
+.player2 {
+  text-align: center;
+  width:100%;
+}
+
+.player1 button {
+  height: 150px;
+  width: 200px;
+}
