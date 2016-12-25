@@ -4,11 +4,11 @@ var game = {
   player2Cards: [],
   remainingCards: [],
   playedCards: [],
-  startGame: startGame,
   currentPlayer: 1,
   noOfPlayers: 2,
   isGameOver: false,
-  whoWon: 0
+  whoWon: 0,
+  noOfTurn: 0
 }
 
 function Cards () {
@@ -27,23 +27,27 @@ function ExplodingKittenCards () {
 }
 
 function DefuseCards () {
-  this.type = 'Defuse'
+  this.type = 'defuse'
   this.render
 }
 
 function SkipCards () {
-  this.type = 'Skip'
+  this.type = 'skip'
   this.render
 }
 
 function AttackCards () {
-  this.type = 'Attack'
+  this.type = 'attack'
   this.render
 }
 
 function SeeTheFutureCards () {
-  this.type = 'See The Future'
+  this.type = 'see-the-future'
   this.render
+}
+
+function DrawFromBottomCards () {
+  this.type = 'draw-from-bottom'
 }
 
 ShuffleCards.prototype.render = function () {
@@ -62,6 +66,10 @@ SkipCards.prototype.render = function () {
     game.currentPlayer += 1
   } else {
     game.currentPlayer = 1
+  }
+
+  if (game.noOfTurn !== 0) {
+    game.noOfTurn += 1
   }
   console.log(game.currentPlayer)
 }
@@ -84,11 +92,9 @@ DefuseCards.prototype.render = function () {
 
 AttackCards.prototype.render = function () {
   console.log('Attack Cards Started')
-  if (game.currentPlayer < game.noOfPlayers) {
-    game.currentPlayer += 1
-  } else {
-    game.currentPlayer = 1
-  }
+  var victim = prompt('Please select a player')
+  game.currentPlayer = parseInt(victim)
+  game.noOfTurn += 2
   console.log(game.currentPlayer)
 }
 
@@ -104,9 +110,12 @@ ExplodingKittenCards.prototype.render = function () {
       clearInterval(countDown)
       game.isGameOver = true
       game.whoWon = 3 - game.currentPlayer
-      isGameOver()
     }
   }, 100)
+}
+
+DrawFromBottomCards.prototype.render = function () {
+  drawCard(game.remainingCards.length - 1)
 }
 
 // Game Methods
@@ -116,6 +125,8 @@ function startGame () {
     game.remainingCards.push(new SkipCards())
     game.remainingCards.push(new SeeTheFutureCards())
     game.remainingCards.push(new AttackCards())
+    game.remainingCards.push(new DrawFromBottomCards())
+
     if (i === 3) {
       game.remainingCards.push(new DefuseCards())
     }
@@ -154,26 +165,30 @@ function shuffle () {
 
 function playTurn (choice) {
   if (game.isGameOver === false) {
-    //console.log('Player', game.currentPlayer, 'playTurn')
-    //console.log('choice', choice)
-    //console.log(game['player' + game.currentPlayer + 'Cards'][choice])
+    // console.log('Player', game.currentPlayer, 'playTurn')
+    // console.log('choice', choice)
+    // console.log(game['player' + game.currentPlayer + 'Cards'][choice])
     game.playedCards.push(game['player' + game.currentPlayer + 'Cards'][choice])
     game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
     game['playedCards'][game.playedCards.length - 1].render()
   //  console.log(game['player' + game.currentPlayer + 'Cards'])
-    //console.log(game.playedCards)
-    //console.log('renderSuccessful')
+    // console.log(game.playedCards)
+    // console.log('renderSuccessful')
   }
 }
 
-function drawCard () {
+function drawCard (num) {
   console.log('Player', game.currentPlayer, 'drawCard')
-  if (game.remainingCards[0].type === 'kitten') {
-    game.remainingCards[0].render()
+  if (game.remainingCards[num].type === 'kitten') {
+    game.remainingCards[num].render()
   } else {
-    game['player' + game.currentPlayer + 'Cards'].push(game.remainingCards[0])
-    game.remainingCards.shift()
-    game.currentPlayer = 3 - game.currentPlayer
+    game['player' + game.currentPlayer + 'Cards'].push(game.remainingCards[num])
+    game.remainingCards.splice(num, 1)
+    if (game.noOfTurn < 1) {
+      game.currentPlayer = 3 - game.currentPlayer
+    } else {
+      game.noOfTurn -= 1
+    }
   }
 }
 
@@ -185,25 +200,22 @@ function isGameOver () {
 
 $(document).ready(function () {
   startGame()
-  for (var i = 0; i < game.player1Cards.length; i++) {
-    $('.player1').append('<button>' + game.player1Cards[i].type + '</button>')
-  }
-  for (var i = 0; i < game.player2Cards.length; i++) {
-    $('.player2').append('<button>' + game.player2Cards[i].type + '</button>')
-  }
+  updateNotice()
+  updateCards()
 
-  $('.player1').off('click', 'button')
-  $('.player1').on('click', 'button', function () {
-    var index = $('.player1 button').index(this)
-    alert('index ' + index)
+  $('.player1Cards').off('click', 'button')
+  $('.player1Cards').on('click', 'button', function () {
+    var index = $('.player1Cards button').index(this)
+    // alert('index ' + index)
     if (game.currentPlayer === 1 && game.isGameOver === false) {
       playTurn((index))
     } else {
       alert('It is not your turn!')
     }
     updateDisplay()
+    updateNotice()
   })
-
+/*
   $('.player2').off('click', 'button')
   $('.player2').on('click', 'button', function () {
     var index = $('.player2 button').index(this)
@@ -214,27 +226,42 @@ $(document).ready(function () {
       alert('It is not your turn!')
     }
     updateDisplay()
+    updateNotice()
   })
+*/
+
+  $('.player1Cards button').hover(function () {
+    var index = $('.player1Cards button').index(this) + 1
+    $('.player1Cards button:nth-child(' + index + ')').css({
+      'height': '200px'
+    })
+  },
+  function () {
+    var index = $('.player1Cards button').index(this) + 1
+    $('.player1Cards button:nth-child(' + index + ')').css({
+      'height': '150px'
+    })
+  }
+  )
 
   $('.remaining-cards').click(function () {
-    drawCard()
+    drawCard(0)
     updateDisplay()
+    updateNotice()
   })
 })
 
 function updateDisplay () {
+  isGameOver()
   if (game.playedCards.length > 0) {
     $('.played-cards').text(game.playedCards[game.playedCards.length - 1].type)
   }
 
   $('.player1 button').remove()
   $('.player2 button').remove()
-  for (var i = 0; i < game.player1Cards.length; i++) {
-    $('.player1').append('<button>' + game.player1Cards[i].type + '</button>')
-  }
-  for (var i = 0; i < game.player2Cards.length; i++) {
-    $('.player2').append('<button>' + game.player2Cards[i].type + '</button>')
-  }
+  updateCards()
+
+  $('.explosive-meter h1').text(Math.round(1 / game.remainingCards.length * 100) + ' %')
 }
 
 function showExplosive () {
@@ -245,5 +272,88 @@ function showExplosive () {
 function hideExplosive () {
   $('.explosive').hide()
   updateDisplay()
+}
+
+function updateNotice () {
+  $('.notice h1').text('Player ' + game.currentPlayer + '\'s Turn')
+  if (game.noOfTurn !== 0) {
+    $('.notice h2').text('Player have ' + game.noOfTurn + ' to draw.')
+  } else {
+    $('.notice h2').text('')
+  }
+}
+
+function updateCards () {
+  $('.player1Cards').css({
+    'width': (50 * (game.player1Cards.length - 2) + 200) + 'px'
+  })
+  var left = 0
+  for (var i = 0; i < game.player1Cards.length; i++) {
+    $('.player1Cards').append('<button>' + game.player1Cards[i].type + '</button>')
+    $('.player1Cards button:nth-child(' + (i + 1) + ')').css({
+      'left': left + 'px'
+    })
+    left += 50
+  }
+  for (var i = 0; i < game.player2Cards.length; i++) {
+    $('.player2').append('<button>' + game.player2Cards[i].type + '</button>')
+  }
+}
+
+var checkPlayer
+checkPlayer = setInterval(function () {
+  if (game.currentPlayer === 2) {
+    computerPlayer()
+  }
+}, 1000)
+
+function computerPlayer () {
+  alert('Computer')
+//  var index = Math.floor(Math.random() * (game.player2Cards.length - 1))
+  // playTurn(index)
+  drawCard(0)
+  var future = []
+  // use defuse if explosive kitten is drawn
+  if (game.remainingCards[0].type === 'kitten') {
+    for (var i = 0; i < game.player2Cards.length; i++) {
+      if (game.player2Cards[i].type === 'defuse') {
+        playTurn(i)
+        break
+      } else {
+        clearInterval(checkPlayer)
+      }
+    }
+  } else if ((1 / game.remainingCards.length * 100) > 50) {
+    if (future.length === 0) {
+      for (var i = 0; i < game.player2Cards.length; i++) {
+        if (game.player2Cards[i].type === 'see-the-future') {
+          playTurn(i)
+          future = game.remainingCards.slice[0, 3]
+          break
+        }
+      }
+    } else if (future[0].type === 'kitten') {
+      for (var i = 0; i < game.player2Cards.length; i++) {
+        if (game.player2Cards[i].type === 'skip') {
+          playTurn(i)
+          break
+        }
+      }
+    }
+  } else {
+    drawCard(0)
+  }
+/*   && future.length === 0) {
+    for (var i = 0; i < game.player2Cards.length; i++) {
+      if (game.player2Cards[i].type === 'see-the-future') {
+        playTurn(i)
+        future = game.remainingCards.slice[0, 3]
+        break
+      }
+    }
+  } */
+
+  updateDisplay()
+  updateNotice()
 }
 // console.log(cards[0]);
