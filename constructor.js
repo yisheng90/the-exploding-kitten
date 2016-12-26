@@ -8,7 +8,8 @@ var game = {
   noOfPlayers: 2,
   isGameOver: false,
   whoWon: 0,
-  noOfTurn: 0
+  noOfTurn: 0,
+  explosionStatus: false
 }
 
 function Cards () {
@@ -83,6 +84,7 @@ skip.render() */
 
 DefuseCards.prototype.render = function () {
   clearInterval(countDown)
+  game.explosionStatus === false
   hideExplosive()
   if (game.remainingCards[0].type === 'kitten') {
     shuffle()
@@ -92,8 +94,11 @@ DefuseCards.prototype.render = function () {
 
 AttackCards.prototype.render = function () {
   console.log('Attack Cards Started')
-  var victim = prompt('Please select a player')
-  game.currentPlayer = parseInt(victim)
+  if (game.currentPlayer === 1) {
+    game.currentPlayer === 2
+  } else {
+    game.currentPlayer === 1
+  }
   game.noOfTurn += 2
   console.log(game.currentPlayer)
 }
@@ -101,6 +106,7 @@ AttackCards.prototype.render = function () {
 var countDown
 ExplodingKittenCards.prototype.render = function () {
   console.log('Exploding')
+  game.explosionStatus === true
   showExplosive()
   var time = 10
   countDown = setInterval(function () {
@@ -305,13 +311,13 @@ checkPlayer = setInterval(function () {
   if (game.currentPlayer === 2) {
     computerPlayer()
   }
-}, 1000)
+}, 5000)
 
 function computerPlayer () {
   alert('Computer')
 //  var index = Math.floor(Math.random() * (game.player2Cards.length - 1))
   // playTurn(index)
-  drawCard(0)
+  // drawCard(0)
   var future = []
   // use defuse if explosive kitten is drawn
   if (game.remainingCards[0].type === 'kitten') {
@@ -320,7 +326,7 @@ function computerPlayer () {
         playTurn(i)
         break
       } else {
-        clearInterval(checkPlayer)
+        //clearInterval(checkPlayer)
       }
     }
   } else if ((1 / game.remainingCards.length * 100) > 50) {
