@@ -12,13 +12,16 @@ var game = {
   explosionStatus: false
 }
 
+var future = []
+var player1Moves = []
+
 function Cards () {
   this.type = 'normal'
   this.render
 }
 
 function ShuffleCards () {
-  this.type = 'Shuffle'
+  this.type = 'shuffle'
   this.render
 }
 
@@ -51,6 +54,7 @@ function DrawFromBottomCards () {
   this.type = 'draw-from-bottom'
 }
 
+// Cards Methods
 ShuffleCards.prototype.render = function () {
   shuffle()
 }
@@ -58,7 +62,12 @@ ShuffleCards.prototype.render = function () {
 SeeTheFutureCards.prototype.render = function () {
   console.log('SeeTheFuture Started')
   var topThreeCards = game.remainingCards.slice(0, 3)
-  alert(JSON.stringify(topThreeCards))
+
+  if (game.currentCards === 1) {
+    alert(JSON.stringify(topThreeCards))
+  } else {
+    future = topThreeCards
+  }
 }
 
 SkipCards.prototype.render = function () {
@@ -123,271 +132,3 @@ ExplodingKittenCards.prototype.render = function () {
 DrawFromBottomCards.prototype.render = function () {
   drawCard(game.remainingCards.length - 1)
 }
-
-// Game Methods
-function startGame () {
-  for (var i = 0; i < 4; i++) {
-    game.remainingCards.push(new ShuffleCards())
-    game.remainingCards.push(new SkipCards())
-    game.remainingCards.push(new SeeTheFutureCards())
-    game.remainingCards.push(new AttackCards())
-    game.remainingCards.push(new DrawFromBottomCards())
-
-    if (i === 3) {
-      game.remainingCards.push(new DefuseCards())
-    }
-  }
-
-  shuffle()
-  for (var i = 0; i < 4; i++) {
-    game.player1Cards.push(game.remainingCards[i])
-    game.remainingCards.shift()
-  }
-
-  for (var i = 0; i < 4; i++) {
-    game.player2Cards.push(game.remainingCards[i])
-    game.remainingCards.shift()
-  }
-
-  game.player1Cards.push(new DefuseCards())
-  game.player2Cards.push(new DefuseCards())
-  game.remainingCards.push(new ExplodingKittenCards())
-  shuffle()
-
-  console.log(game)
-}
-
-function shuffle () {
-  var i = game.remainingCards.length - 1
-  while (i > 0) {
-    num = Math.floor(Math.random() * game.remainingCards.length)
-    var temp = game.remainingCards[i]
-    game.remainingCards[i] = game.remainingCards[num]
-    game.remainingCards[num] = temp
-    i--
-  }
-  console.log(game.remainingCards)
-}
-
-function playTurn (choice) {
-  if (game.isGameOver === false) {
-    // console.log('Player', game.currentPlayer, 'playTurn')
-    // console.log('choice', choice)
-    // console.log(game['player' + game.currentPlayer + 'Cards'][choice])
-    if (game.explosionStatus === true) {
-    alert('explosive');
-    alert(game['player' + game.currentPlayer + 'Cards'][choice].type);
-      if (game['player' + game.currentPlayer + 'Cards'][choice].type === "defuse") {
-        game.playedCards.push(game['player' + game.currentPlayer + 'Cards'][choice])
-        game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
-        game['playedCards'][game.playedCards.length - 1].render()
-      } else {
-        alert('cannot play this card')
-      }
-    } else {
-      game.playedCards.push(game['player' + game.currentPlayer + 'Cards'][choice])
-      game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
-      game['playedCards'][game.playedCards.length - 1].render()
-    }
-
-  //  console.log(game['player' + game.currentPlayer + 'Cards'])
-    // console.log(game.playedCards)
-    // console.log('renderSuccessful')
-  }
-}
-
-function drawCard (num) {
-  console.log('Player', game.currentPlayer, 'drawCard')
-  if (game.remainingCards[num].type === 'kitten') {
-    game.remainingCards[num].render()
-  } else {
-    game['player' + game.currentPlayer + 'Cards'].push(game.remainingCards[num])
-    game.remainingCards.splice(num, 1)
-    if (game.noOfTurn < 1) {
-      game.currentPlayer = 3 - game.currentPlayer
-    } else {
-      game.noOfTurn -= 1
-    }
-  }
-}
-
-function isGameOver () {
-  if (game.isGameOver === true) {
-    alert('Game Over')
-  }
-}
-
-$(document).ready(function () {
-  startGame()
-  updateNotice()
-  updateCards()
-
-  $('.player1Cards').off('click', 'button')
-  $('.player1Cards').on('click', 'button', function () {
-    var index = $('.player1Cards button').index(this)
-    // alert('index ' + index)
-    if (game.currentPlayer === 1 && game.isGameOver === false) {
-      playTurn((index))
-    } else {
-      alert('It is not your turn!')
-    }
-    updateDisplay()
-    updateNotice()
-  })
-/*
-  $('.player2').off('click', 'button')
-  $('.player2').on('click', 'button', function () {
-    var index = $('.player2 button').index(this)
-    console.log(index)
-    if (game.currentPlayer === 2 && game.isGameOver === false) {
-      playTurn((index))
-    } else {
-      alert('It is not your turn!')
-    }
-    updateDisplay()
-    updateNotice()
-  })
-*/
-
-  $('.player1Cards button').hover(function () {
-    var index = $('.player1Cards button').index(this) + 1
-    $('.player1Cards button:nth-child(' + index + ')').css({
-      'height': '200px'
-    })
-  },
-  function () {
-    var index = $('.player1Cards button').index(this) + 1
-    $('.player1Cards button:nth-child(' + index + ')').css({
-      'height': '150px'
-    })
-  }
-  )
-
-  $('.remaining-cards').click(function () {
-    drawCard(0)
-    updateDisplay()
-    updateNotice()
-  })
-})
-
-function updateDisplay () {
-  isGameOver()
-  if (game.playedCards.length > 0) {
-    $('.played-cards').text(game.playedCards[game.playedCards.length - 1].type)
-  }
-
-  $('.player1 button').remove()
-  $('.player2 button').remove()
-  updateCards()
-
-  $('.explosive-meter h1').text(Math.round(1 / game.remainingCards.length * 100) + ' %')
-}
-
-function showExplosive () {
-  $('.explosive').text('Explosive Kitten')
-  .fadeIn()
-}
-
-function hideExplosive () {
-  $('.explosive').hide()
-  updateDisplay()
-}
-
-function updateNotice () {
-  $('.notice h1').text('Player ' + game.currentPlayer + '\'s Turn')
-  if (game.noOfTurn !== 0) {
-    $('.notice h2').text('Player have ' + game.noOfTurn + ' to draw.')
-  } else {
-    $('.notice h2').text('')
-  }
-}
-
-function updateCards () {
-  $('.player1Cards').css({
-    'width': (50 * (game.player1Cards.length - 2) + 200) + 'px'
-  })
-  var left = 0
-  for (var i = 0; i < game.player1Cards.length; i++) {
-    $('.player1Cards').append('<button>' + game.player1Cards[i].type + '</button>')
-    $('.player1Cards button:nth-child(' + (i + 1) + ')').css({
-      'left': left + 'px'
-    })
-    left += 50
-  }
-  for (var i = 0; i < game.player2Cards.length; i++) {
-    $('.player2').append('<button>' + game.player2Cards[i].type + '</button>')
-  }
-}
-
-var checkPlayer
-checkPlayer = setInterval(function () {
-  if (game.currentPlayer === 2) {
-    computerPlayer()
-  }
-}, 5000)
-
-function computerPlayer () {
-  alert('Computer')
-  var currentCards = {}
-
-  for (var i = 0; i < game.player2Cards.length ; i++) {
-  currentCards[game.player2Cards[i].type] = 0
-  }
-
-  //Use defuse when explosion status is true
-  if (game.explosionStatus === true) {
-    if (Ocject.keys(currentCards).includes('defuse')) {
-      currentCards['defuse'] = 100
-    } else {
-      clearInterval(checkPlayer)
-    }
-  }
-
-  if (game.explosionStatus !== true) {
-    //use skip if the last two played cards are skip/ attack /see the future
-    if (game.playedCards.length > 0) {
-    if (game.playedCards[game.playedCards.length-1].type === 'skip' || game.playedCards[game.playedCards.length-1].type === 'attack') {
-    //  if (game.playedCards[game.playedCards.length-2].type === 'see-the-future') {
-        currentCards['draw-from-bottom'] += 80
-        currentCards['skip'] += 60
-        currentCards['attack'] += 50
-      //}
-    }
-
-    if (game.playedCards[game.playedCards.length-1].type === 'see-the-future') {
-      currentCards['see-the-future'] += 50
-      currentCards['skip'] += 20
-      currentCards['drawCard'] += 30
-    }
-
-    if (game.playedCards[game.playedCards.length-1].type === 'defuse') {
-      currentCards['see-the-future'] += 100
-      currentCards['draw-from-bottom'] += 80
-    }
-  }
-}
-
-  var max = ['', 0]
-  for (var key in currentCards) {
-    if (currentCards[key] > max[1]) {
-      max[0] =key
-      max[1] = currentCards[key]
-    }
-  }
-
-  for (var i =0 ; i < game.player2Cards.length; i++) {
-    console.log(max[0]);
-
-    if (game.player2Cards[i].type === max[0]) {
-      playTurn(i)
-      break
-    }
-  }
-
-
-  console.log(currentCards);
-
-  updateDisplay()
-  updateNotice()
-}
-// console.log(cards[0]);
