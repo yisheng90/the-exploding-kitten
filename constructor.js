@@ -84,7 +84,7 @@ skip.render() */
 
 DefuseCards.prototype.render = function () {
   clearInterval(countDown)
-  game.explosionStatus === false
+  game.explosionStatus = false
   hideExplosive()
   if (game.remainingCards[0].type === 'kitten') {
     shuffle()
@@ -95,9 +95,9 @@ DefuseCards.prototype.render = function () {
 AttackCards.prototype.render = function () {
   console.log('Attack Cards Started')
   if (game.currentPlayer === 1) {
-    game.currentPlayer === 2
+    game.currentPlayer = 2
   } else {
-    game.currentPlayer === 1
+    game.currentPlayer = 1
   }
   game.noOfTurn += 2
   console.log(game.currentPlayer)
@@ -106,7 +106,7 @@ AttackCards.prototype.render = function () {
 var countDown
 ExplodingKittenCards.prototype.render = function () {
   console.log('Exploding')
-  game.explosionStatus === true
+  game.explosionStatus = true
   showExplosive()
   var time = 10
   countDown = setInterval(function () {
@@ -174,9 +174,22 @@ function playTurn (choice) {
     // console.log('Player', game.currentPlayer, 'playTurn')
     // console.log('choice', choice)
     // console.log(game['player' + game.currentPlayer + 'Cards'][choice])
-    game.playedCards.push(game['player' + game.currentPlayer + 'Cards'][choice])
-    game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
-    game['playedCards'][game.playedCards.length - 1].render()
+    if (game.explosionStatus === true) {
+    alert('explosive');
+    alert(game['player' + game.currentPlayer + 'Cards'][choice].type);
+      if (game['player' + game.currentPlayer + 'Cards'][choice].type === "defuse") {
+        game.playedCards.push(game['player' + game.currentPlayer + 'Cards'][choice])
+        game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
+        game['playedCards'][game.playedCards.length - 1].render()
+      } else {
+        alert('cannot play this card')
+      }
+    } else {
+      game.playedCards.push(game['player' + game.currentPlayer + 'Cards'][choice])
+      game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
+      game['playedCards'][game.playedCards.length - 1].render()
+    }
+
   //  console.log(game['player' + game.currentPlayer + 'Cards'])
     // console.log(game.playedCards)
     // console.log('renderSuccessful')
@@ -315,49 +328,64 @@ checkPlayer = setInterval(function () {
 
 function computerPlayer () {
   alert('Computer')
-//  var index = Math.floor(Math.random() * (game.player2Cards.length - 1))
-  // playTurn(index)
-  // drawCard(0)
-  var future = []
-  // use defuse if explosive kitten is drawn
-  if (game.remainingCards[0].type === 'kitten') {
-    for (var i = 0; i < game.player2Cards.length; i++) {
-      if (game.player2Cards[i].type === 'defuse') {
-        playTurn(i)
-        break
-      } else {
-        //clearInterval(checkPlayer)
-      }
-    }
-  } else if ((1 / game.remainingCards.length * 100) > 50) {
-    if (future.length === 0) {
-      for (var i = 0; i < game.player2Cards.length; i++) {
-        if (game.player2Cards[i].type === 'see-the-future') {
-          playTurn(i)
-          future = game.remainingCards.slice[0, 3]
-          break
-        }
-      }
-    } else if (future[0].type === 'kitten') {
-      for (var i = 0; i < game.player2Cards.length; i++) {
-        if (game.player2Cards[i].type === 'skip') {
-          playTurn(i)
-          break
-        }
-      }
-    }
-  } else {
-    drawCard(0)
+  var currentCards = {}
+
+  for (var i = 0; i < game.player2Cards.length ; i++) {
+  currentCards[game.player2Cards[i].type] = 0
   }
-/*   && future.length === 0) {
-    for (var i = 0; i < game.player2Cards.length; i++) {
-      if (game.player2Cards[i].type === 'see-the-future') {
-        playTurn(i)
-        future = game.remainingCards.slice[0, 3]
-        break
-      }
+
+  //Use defuse when explosion status is true
+  if (game.explosionStatus === true) {
+    if (Ocject.keys(currentCards).includes('defuse')) {
+      currentCards['defuse'] = 100
+    } else {
+      clearInterval(checkPlayer)
     }
-  } */
+  }
+
+  if (game.explosionStatus !== true) {
+    //use skip if the last two played cards are skip/ attack /see the future
+    if (game.playedCards.length > 0) {
+    if (game.playedCards[game.playedCards.length-1].type === 'skip' || game.playedCards[game.playedCards.length-1].type === 'attack') {
+    //  if (game.playedCards[game.playedCards.length-2].type === 'see-the-future') {
+        currentCards['draw-from-bottom'] += 80
+        currentCards['skip'] += 60
+        currentCards['attack'] += 50
+      //}
+    }
+
+    if (game.playedCards[game.playedCards.length-1].type === 'see-the-future') {
+      currentCards['see-the-future'] += 50
+      currentCards['skip'] += 20
+      currentCards['drawCard'] += 30
+    }
+
+    if (game.playedCards[game.playedCards.length-1].type === 'defuse') {
+      currentCards['see-the-future'] += 100
+      currentCards['draw-from-bottom'] += 80
+    }
+  }
+}
+
+  var max = ['', 0]
+  for (var key in currentCards) {
+    if (currentCards[key] > max[1]) {
+      max[0] =key
+      max[1] = currentCards[key]
+    }
+  }
+
+  for (var i =0 ; i < game.player2Cards.length; i++) {
+    console.log(max[0]);
+
+    if (game.player2Cards[i].type === max[0]) {
+      playTurn(i)
+      break
+    }
+  }
+
+
+  console.log(currentCards);
 
   updateDisplay()
   updateNotice()
