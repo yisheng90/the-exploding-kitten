@@ -48,15 +48,18 @@ function playTurn (choice) {
         return
       }
     }
-      game.playedCards.push(game['player' + game.currentPlayer + 'Cards'][choice])
-      game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
-      game['playedCards'][game.playedCards.length - 1].render()
-  }
+    game.playedCards.push(game['player' + game.currentPlayer + 'Cards'][choice])
+    if (game.currentPlayer === 1) {
+      player1Moves.unshift(game['player' + game.currentPlayer + 'Cards'][choice].type)
+      console.log('push', game['player' + game.currentPlayer + 'Cards'][choice].type)
+    }
+    game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
+    game['playedCards'][game.playedCards.length - 1].render()
 
-  if (game.currentPlayer === 1) {
-    player1Moves.unshift(game['player' + game.currentPlayer + 'Cards'][choice].type)
+
   }
 }
+
 
 function drawCard (num) {
   console.log('Player', game.currentPlayer, 'drawCard')
@@ -65,6 +68,10 @@ function drawCard (num) {
   } else {
     game['player' + game.currentPlayer + 'Cards'].push(game.remainingCards[num])
     game.remainingCards.splice(num, 1)
+    if (game.currentPlayer === 1) {
+      player1Moves.unshift('draw')
+    }
+
     if (game.noOfTurn < 1) {
       game.currentPlayer = 3 - game.currentPlayer
     } else {
@@ -76,11 +83,7 @@ function drawCard (num) {
     future.shift()
   }
 
-  if (game.currentPlayer === 1) {
-    player1Moves.unshift('draw')
-  } else {
-    player1Moves = []
-  }
+
 }
 
 function isGameOver () {

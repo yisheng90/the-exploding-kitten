@@ -54,33 +54,38 @@ $(document).ready(function () {
 function updateDisplay () {
   isGameOver()
   if (game.playedCards.length > 0) {
-    $('.played-cards').addClass(game.playedCards[game.playedCards.length - 1].type)
-    .text('')
+    $('.played-cards').removeAttr('id')
+    .attr('id', game.playedCards[game.playedCards.length - 1].type)
   }
 
   $('.player1 button').remove()
   $('.player2 button').remove()
   updateCards()
-
-  $('.explosive-meter h1').text(Math.round(1 / game.remainingCards.length * 100) + ' %')
 }
 
+var flashKitten
 function showExplosive () {
   if (game.currentPlayer === 1) {
     $('.explosive').text('Explosive Kitten')
     .fadeIn()
   } else {
-    $('.player2Explosive').fadeIn()
+    flashKitten = setInterval(function () {
+      $('.player2Explosive').fadeIn()
+      .fadeOut().delay(100)
+    }, 200)
   }
 }
 
 function hideExplosive () {
+  clearInterval(flashKitten)
   if (game.currentPlayer === 1) {
-  $('.explosive').hide()
-  updateDisplay()
-} else {
-  $('.player2Explosive').hide()
-}
+
+    $('.explosive').hide()
+    updateDisplay()
+  } else {
+
+    $('.player2Explosive').hide()
+  }
 }
 
 function updateNotice () {
@@ -90,6 +95,8 @@ function updateNotice () {
   } else {
     $('.notice h2').text('')
   }
+
+  $('.explosive-meter h1').text(Math.round(1 / game.remainingCards.length * 100) + ' %')
 }
 
 function updateCards () {
@@ -103,7 +110,7 @@ function updateCards () {
     $('.player1Cards button:nth-child(' + (i + 1) + ')').css({
       'left': left + 'px'
     })
-    .addClass(game.player1Cards[i].type)
+    .attr('id',game.player1Cards[i].type)
     left += 50
   }
   for (var i = 0; i < game.player2Cards.length; i++) {

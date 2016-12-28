@@ -63,7 +63,7 @@ SeeTheFutureCards.prototype.render = function () {
   console.log('SeeTheFuture Started')
   var topThreeCards = game.remainingCards.slice(0, 3)
 
-  if (game.currentCards === 1) {
+  if (game.currentPlayer === 1) {
     alert(JSON.stringify(topThreeCards))
   } else {
     future = topThreeCards
@@ -98,7 +98,12 @@ DefuseCards.prototype.render = function () {
   if (game.remainingCards[0].type === 'kitten') {
     shuffle()
   }
-  game.currentPlayer = 3 - game.currentPlayer
+
+  if (game.noOfTurn === 0) {
+    game.currentPlayer = 3 - game.currentPlayer
+  } else {
+    game.noOfTurn -= 1
+  }
 }
 
 AttackCards.prototype.render = function () {

@@ -94,10 +94,14 @@ button {
 .explosive-meter {
   position: absolute;
   top: 30%;
-  left: 5%;
+  left: 11%;
   height: 200px;
   width: 200px;
-  background: green;
+  background: url('./img/bomb.png');
+  background-size: cover;
+  text-align: center;
+  line-height: 200px;
+  color: white;
 }
 
 .notice {
@@ -121,48 +125,55 @@ button {
   border: 4px red solid;
 }
 
-.player2Explosive {
-  position: absolute;
-  top: 0;
-  left: 45%;
-  height: 50px;
-  width: 50px;
-  background: black;
-}
 
-.shuffle {
+
+#shuffle {
   background: url('./img/shuffle-cards.png');
   background-size: cover;
 }
 
-.skip {
+#skip {
   background: url('./img/skip-card.png');
   background-size: cover;
 }
 
-.see-the-future {
+#see-the-future {
   background: url('./img/seethefuture-card.png');
   background-size: cover;
 }
 
-.draw-from-bottom {
+#draw-from-bottom {
   background: url('./img/drawfrombottom.png');
   background-size: cover;
 }
 
-.defuse {
+#defuse {
   background: url('./img/defuse-card.png');
   background-size: cover;
 }
 
-.attack {
+#attack {
   background: url('./img/attack-card.png');
   background-size: cover;
 }
 
-.player2Explosive {
-  display: none;
+#kitten {
+  background: url('./img/kitten-card.png');
+  background-size: cover;
+}
 
+.player2Explosive {
+  display:none;
+  position: absolute;
+  top: 0;
+  left: 45%;
+  width: 80px;
+  height: 100px;
+  background: url('./img/kitten-card.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 20px;
+  transform: rotate(20deg);
 }
 
 .logo {
