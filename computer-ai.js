@@ -9,7 +9,7 @@ checkPlayer = setInterval(function () {
 var aiMoves = []
 function computerPlayer () {
   alert('Computer')
-  console.log('move', player1Moves)
+  console.log('move', game.player1Moves)
   var currentCards = {}
 
   for (var i = 0; i < game.player2Cards.length; i++) {
@@ -28,60 +28,68 @@ function computerPlayer () {
 
   // Evaluate probabilty when explosion status is not true
   if (game.explosionStatus !== true) {
-    if (player1Moves[0] === 'skip' || player1Moves[0] === 'attack') {
-      if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] += 150 }
-      if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 100 }
-      if (Object.keys(currentCards).includes('draw-from-bottom')) { currentCards['draw-from-bottom'] += 100 }
-      if (Object.keys(currentCards).includes('skip')) { currentCards['skip'] += 100 }
-      if (Object.keys(currentCards).includes('attack')) { currentCards['attack'] += 100 }
-      currentCards['draw'] -= 50
+    if (game.player1Moves[0] === 'skip' || game.player1Moves[0] === 'attack') {
+      if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] += 150 * randomness() }
+      if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 100 * randomness() }
+      if (Object.keys(currentCards).includes('draw-from-bottom')) { currentCards['draw-from-bottom'] += 100 * randomness() }
+      if (Object.keys(currentCards).includes('skip')) { currentCards['skip'] += 100 * randomness() }
+      if (Object.keys(currentCards).includes('attack')) { currentCards['attack'] += 100 * randomness() }
+      currentCards['draw'] += 80 * randomness()
     }
 
-    if (player1Moves.length > 1) {
-      if (player1Moves[1] === 'see-the-future' && (player1Moves[0] === 'skip' || player1Moves[0] === 'attack' || player1Moves[0] === 'draw-from-bottom')) {
-        if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 100 }
-        if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] += 50 }
-        if (Object.keys(currentCards).includes('skip')) { currentCards['skip'] += 200 }
+    if (game.player1Moves.length > 1) {
+      if (game.player1Moves[1] === 'see-the-future' && (game.player1Moves[0] === 'skip' || game.player1Moves[0] === 'attack' || game.player1Moves[0] === 'draw-from-bottom')) {
+        if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 100 * randomness() }
+        if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] += 50 * randomness() }
+        if (Object.keys(currentCards).includes('skip')) { currentCards['skip'] += 200 * randomness() }
         if (Object.keys(currentCards).includes('draw')) { currentCards['draw'] -= 200 }
-        if (Object.keys(currentCards).includes('draw-from-bottom')) { currentCards['draw-from-bottom'] += 200 }
+        if (Object.keys(currentCards).includes('draw-from-bottom')) { currentCards['draw-from-bottom'] += 200 * randomness() }
       }
     }
 
-    if (player1Moves[0] === 'defuse') {
-      if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] += 100 }
-    //  if (Object.keys(currentCards).includes('draw-from-bottom')) { currentCards['draw-from-bottom'] += 80 }
+    if (game.player1Moves[0] === 'defuse') {
+      if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] += 100 * randomness() }
+      if (Object.keys(currentCards).includes('draw-from-bottom')) { currentCards['draw-from-bottom'] += 80 * randomness() }
+      if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 100 * randomness() }
+      currentCards['draw'] += 80 * randomness()
     }
 
-    if (player1Moves[0] === 'draw') {
-      currentCards['draw'] += 100
-      if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 50 }
+    if (game.player1Moves[0] === 'draw') {
+      currentCards['draw'] += 100 * randomness()
+      if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 100 * randomness() }
+      if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] += 100 * randomness() }
     }
 
-    if (player1Moves[0] === 'shuffle') {
+    if (game.player1Moves[0] === 'shuffle') {
       currentCards['draw'] += 1000
-      if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] -= 500 }
+      if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] -= 500 * randomness() }
     }
 
     if (game.playedCards.length === 0) {
       currentCards['draw'] += 500
     }
 
-    if (1 / game.remainingCards.length > 0.5 && future.length === 0) {
-      currentCards['see-the-future'] += 100
+    if (1 / game.drawingPile.length > 0.5 && game.knownCards.length === 0) {
+      currentCards['see-the-future'] += 100 * randomness()
     }
 
-    if (future.length > 0) {
-      if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] -= 100 }
+    if (game.knownCards.length > 0) {
+      if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] -= 100 * randomness() }
 
-      if (future[0].type === 'kitten') {
+      if (game.knownCards[0].type === 'kitten') {
         if (player1Moves.includes('defuse')) {
-          if (Object.keys(currentCards).includes('skip')) { currentCards['skip'] += 900 }
-          if (Object.keys(currentCards).includes('attack')) { currentCards['attack'] += 900 }
+          if (Object.keys(currentCards).includes('skip')) { currentCards['skip'] += 900 * randomness() }
+          if (Object.keys(currentCards).includes('attack')) { currentCards['attack'] += 900 * randomness() }
         }
-        if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 100 }
-        if (Object.keys(currentCards).includes('draw-from-bottom')) { currentCards['draw-from-bottom'] += 100 }
+        if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 100 * randomness() }
+        if (Object.keys(currentCards).includes('draw-from-bottom')) { currentCards['draw-from-bottom'] += 100 * randomness() }
         currentCards['draw'] -= 200
       }
+    }
+
+    if (1 / game.drawingPile.length === 1) {
+      currentCards['draw'] -= 20000
+
     }
   }
 
@@ -112,3 +120,11 @@ function computerPlayer () {
   updateNotice()
 }
 // console.log(cards[0]);
+
+function randomness () {
+  var randomValue = Math.random()
+  if (randomValue < 0.5) {
+    randomValue += 0.5
+  }
+  return randomValue
+}

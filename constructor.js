@@ -1,19 +1,4 @@
-// This describe the cards constructor
-var game = {
-  player1Cards: [],
-  player2Cards: [],
-  remainingCards: [],
-  playedCards: [],
-  currentPlayer: 1,
-  noOfPlayers: 2,
-  isGameOver: false,
-  whoWon: 0,
-  noOfTurn: 0,
-  explosionStatus: false
-}
-
-var future = []
-var player1Moves = []
+//Cards and Cards' Methods
 
 function Cards () {
   this.type = 'normal'
@@ -54,6 +39,10 @@ function DrawFromBottomCards () {
   this.type = 'draw-from-bottom'
 }
 
+function FavorCards () {
+  this.type = 'favor'
+}
+
 // Cards Methods
 ShuffleCards.prototype.render = function () {
   shuffle()
@@ -61,12 +50,12 @@ ShuffleCards.prototype.render = function () {
 
 SeeTheFutureCards.prototype.render = function () {
   console.log('SeeTheFuture Started')
-  var topThreeCards = game.remainingCards.slice(0, 3)
+  var topThreeCards = game.drawingPile.slice(0, 3)
 
   if (game.currentPlayer === 1) {
     alert(JSON.stringify(topThreeCards))
   } else {
-    future = topThreeCards
+    game.knownCards = topThreeCards
   }
 }
 
@@ -81,21 +70,15 @@ SkipCards.prototype.render = function () {
   if (game.noOfTurn !== 0) {
     game.noOfTurn += 1
   }
-  console.log(game.currentPlayer)
+  console.log('Skip Cards Ended, current player is', game.currentPlayer)
 }
-/* var card1 = new ShuffleCards()
-var future = new SeeTheFutureCards()
-var skip = new SkipCards()
-card1.render()
-future.render()
-skip.render()
-skip.render() */
 
 DefuseCards.prototype.render = function () {
+  console.log('Defuse Cards Started')
   clearInterval(countDown)
-  game.explosionStatus = false
   hideExplosive()
-  if (game.remainingCards[0].type === 'kitten') {
+  game.explosionStatus = false
+  if (game.drawingPile[0].type === 'kitten') {
     shuffle()
   }
 
@@ -104,6 +87,8 @@ DefuseCards.prototype.render = function () {
   } else {
     game.noOfTurn -= 1
   }
+
+  console.log('Defuse Cards Ended')
 }
 
 AttackCards.prototype.render = function () {
@@ -114,26 +99,40 @@ AttackCards.prototype.render = function () {
     game.currentPlayer = 1
   }
   game.noOfTurn += 2
-  console.log(game.currentPlayer)
+  console.log('Skip Cards Ended, current player is', game.currentPlayer)
 }
 
 var countDown
+var time
 ExplodingKittenCards.prototype.render = function () {
-  console.log('Exploding')
+  console.log('Exploding Started')
   game.explosionStatus = true
   showExplosive()
-  var time = 10
+  time = 10
   countDown = setInterval(function () {
     time -= 0.1
-    console.log(time)
+    updateTime()
     if (time <= 0) {
-      clearInterval(countDown)
       game.isGameOver = true
       game.whoWon = 3 - game.currentPlayer
+      updateDisplay()
+      clearInterval(countDown)
     }
   }, 100)
+  console.log('Explosing Ended');
 }
 
 DrawFromBottomCards.prototype.render = function () {
-  drawCard(game.remainingCards.length - 1)
+  console.log('Draw From Bottom Started')
+  drawCard(game.drawingPile.length - 1)
+  console.log('Draw From Bottom  Ended');
+}
+
+FavorCards.prototype.render = function () {
+  console.log('Favor Cards Started')
+  var num = Math.floor((Math.random())* game['player' + (3 - game.currentPlayer) + 'Cards'].length)
+
+  game['player' + (game.currentPlayer) + 'Cards'].push(game['player' + (3 - game.currentPlayer) + 'Cards'][num])
+  game['player' + (3 - game.currentPlayer) + 'Cards'].splice(num,1)
+  console.log('Ended Started')
 }

@@ -3,10 +3,10 @@ $(document).ready(function () {
   updateNotice()
   updateCards()
 
+
   $('.player1Cards').off('click', 'button')
   $('.player1Cards').on('click', 'button', function () {
     var index = $('.player1Cards button').index(this)
-    // alert('index ' + index)
     if (game.currentPlayer === 1 && game.isGameOver === false) {
       playTurn((index))
     } else {
@@ -44,15 +44,28 @@ $(document).ready(function () {
   }
   )
 
-  $('.remaining-cards').click(function () {
-    drawCard(0)
-    updateDisplay()
-    updateNotice()
+
+  $('.drawingPile').click(function () {
+    if (game.currentPlayer === 1) {
+      drawCard(0)
+      updateDisplay()
+      updateNotice()
+    }
+  })
+
+  $('#restart').click(function () {
+    $('.gameOver').hide()
+    $('.explosive').hide()
+    // game.isGameOver = false
+    restart()
   })
 })
 
 function updateDisplay () {
-  isGameOver()
+  if (game.isGameOver === true) {
+    $('.gameOver').fadeIn()
+  }
+
   if (game.playedCards.length > 0) {
     $('.played-cards').removeAttr('id')
     .attr('id', game.playedCards[game.playedCards.length - 1].type)
@@ -66,8 +79,7 @@ function updateDisplay () {
 var flashKitten
 function showExplosive () {
   if (game.currentPlayer === 1) {
-    $('.explosive').text('Explosive Kitten')
-    .fadeIn()
+    $('.explosive').fadeIn()
   } else {
     flashKitten = setInterval(function () {
       $('.player2Explosive').fadeIn()
@@ -78,13 +90,10 @@ function showExplosive () {
 
 function hideExplosive () {
   clearInterval(flashKitten)
+  $('.player2Explosive').css('display', 'none')
   if (game.currentPlayer === 1) {
-
     $('.explosive').hide()
     updateDisplay()
-  } else {
-
-    $('.player2Explosive').hide()
   }
 }
 
@@ -96,7 +105,7 @@ function updateNotice () {
     $('.notice h2').text('')
   }
 
-  $('.explosive-meter h1').text(Math.round(1 / game.remainingCards.length * 100) + ' %')
+  $('.explosive-meter h1').text(Math.round(1 / game.drawingPile.length * 100) + ' %')
 }
 
 function updateCards () {
@@ -110,10 +119,14 @@ function updateCards () {
     $('.player1Cards button:nth-child(' + (i + 1) + ')').css({
       'left': left + 'px'
     })
-    .attr('id',game.player1Cards[i].type)
+    .attr('id', game.player1Cards[i].type)
     left += 50
   }
   for (var i = 0; i < game.player2Cards.length; i++) {
-    $('.player2').append('<button>' + game.player2Cards[i].type + '</button>')
+    $('.player2').append('<button></button>')
   }
+}
+
+function updateTime () {
+  $('#time').text(Math.ceil(time))
 }

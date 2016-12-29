@@ -2,7 +2,7 @@ body {
   background: url('./img/background.jpg');
   background-size: cover;
 }
-.remaining-cards {
+.drawingPile {
   position: absolute;
   background: url('./img/card-cover.png');
   background-size: contain;
@@ -83,12 +83,45 @@ button {
   left: 25%;
   width: 50%;
   height: 50%;
-  background: black;
-  border: 4px solid green;
+  background: rgba(0,0,0,0.85);
+  border: 4px solid rgba(132,189,0,0.9);
   border-radius: 20px;
-  color: red;
   text-align: center;
   display: none;
+}
+
+.gameOver{
+  position: absolute;
+  top: 0;
+  left: 10%;
+  width: 80%;
+  height: 90%;
+  background: rgba(128,0,0,0.9);
+  border: 4px solid rgba(255,223,0,0.9);
+  text-align: center;
+  font-size: 60px;
+  display: none;
+}
+
+.gameOver h1 {
+  margin: 0 auto;
+  color: white;
+}
+.explosive h1 {
+  color: white;
+}
+
+.explosive span {
+  color: yellow;
+}
+
+.explosive-kitten {
+  display: inline-flex;
+  width: 150px;
+  height: 200px;
+  border-radius: 20px;
+  margin: 20px;
+  justify-content: center;
 }
 
 .explosive-meter {
@@ -162,6 +195,27 @@ button {
   background-size: cover;
 }
 
+#place-your-defuse {
+  border: 2px white dashed;
+  background: url('./img/place-your-defuse.png');
+  background-size: cover;
+  opacity: 0.8;
+}
+
+#avatar1 {
+  background: url('./img/avatar1.png');
+  background-size: cover;
+  width: 300px;
+  height: 300px;
+}
+
+#avatar2 {
+  background: url('./img/avatar2.png');
+  background-size: cover;
+  width: 200px;
+  height: 200px;
+}
+
 .player2Explosive {
   display:none;
   position: absolute;
@@ -181,4 +235,20 @@ button {
   opacity: 0.5;
   width: 200px;
   height: auto;
+}
+
+#time {
+  color: white;
+  font-size: 72px;
+  align-items: center;
+}
+
+.gameOver button {
+  margin: 30px auto;
+  display: block;
+  width: 200px;
+  height: 50px;
+  border-radius: 20px;
+  font-size: 20px;
+  opacity: 0.8;
 }
