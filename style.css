@@ -1,7 +1,9 @@
 body {
   background: url('./img/background.jpg');
   background-size: cover;
+  background-repeat: no-repeat;
 }
+
 .drawingPile {
   position: absolute;
   background: url('./img/card-cover.png');

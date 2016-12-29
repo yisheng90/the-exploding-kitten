@@ -3,7 +3,6 @@ $(document).ready(function () {
   updateNotice()
   updateCards()
 
-
   $('.player1Cards').off('click', 'button')
   $('.player1Cards').on('click', 'button', function () {
     var index = $('.player1Cards button').index(this)
@@ -44,7 +43,6 @@ $(document).ready(function () {
   }
   )
 
-
   $('.drawingPile').click(function () {
     if (game.currentPlayer === 1) {
       drawCard(0)
@@ -56,8 +54,14 @@ $(document).ready(function () {
   $('#restart').click(function () {
     $('.gameOver').hide()
     $('.explosive').hide()
-    // game.isGameOver = false
+    $('.played-cards').removeAttr('id')
+    clearInterval(flashKitten)
     restart()
+    checkPlayer = setInterval(function () {
+      if (game.currentPlayer === 2) {
+        computerPlayer()
+      }
+    }, 5000)
   })
 })
 
@@ -82,31 +86,88 @@ function showExplosive () {
     $('.explosive').fadeIn()
   } else {
     flashKitten = setInterval(function () {
-      $('.player2Explosive').fadeIn()
-      .fadeOut().delay(100)
+      $('.player2Explosive').show()
+      .hide()
     }, 200)
   }
 }
 
 function hideExplosive () {
   clearInterval(flashKitten)
-  $('.player2Explosive').css('display', 'none')
+  $('.player2Explosive').hide()
   if (game.currentPlayer === 1) {
     $('.explosive').hide()
-    updateDisplay()
   }
+  updateDisplay()
 }
 
 function updateNotice () {
   $('.notice h1').text('Player ' + game.currentPlayer + '\'s Turn')
   if (game.noOfTurn !== 0) {
-    $('.notice h2').text('Player have ' + game.noOfTurn + ' to draw.')
+    $('.notice h2').text('Player have ' + game.noOfTurn + ' turn to draw.')
   } else {
     $('.notice h2').text('')
   }
 
+//if (game.player1Moves.length > 0) {
+var player
+  if (game.noOfTurn === 0) {
+     player = 3 - game.currentPlayer
+
+  } else {
+    player = game.currentPlayer
+  }
+
+  var lastMove = game['player'+ player +'Moves'][0]
+  var name  =''
+    if (player === 1) {
+      name = 'You'
+    } else {
+      name = 'Player 2'
+    }
+
+    if ( lastMove === 'see-the-future') {
+      $('.notice h3').text(name+' have seen what the future are...')
+    } else if (lastMove === 'skip') {
+      $('.notice h3').text(name+' have skipped this round...')
+    } else if (lastMove === 'favor') {
+      $('.notice h3').text(name+' got a ' + game['player'+player+'Cards'][game['player'+player+'Cards'].length - 1].type + ' card from player 2...')
+    } else if (lastMove === 'attack') {
+      $('.notice h3').text(name+' have started a war..')
+    } else if (lastMove === 'shuffle') {
+      $('.notice h3').text(name+' have shuffle the pile...')
+    } else if (lastMove === 'shuffle') {
+      $('.notice h3').text(name+' drawn a card from bottom...')
+    } else if (lastMove === 'draw') {
+        $('.notice h3').text(name+' have drawn a card...')
+    }
+    //else {
+      //$('.notice h3').text('')
+    //}
+
+  //}
+/*
+
+  if (game.playedCards.length > 0) {
+    if (game.playedCards[game.playedCards.length - 1].type === game.player1Moves[0]) {
+      if (game.player1Moves[0] === 'see-the-future') {
+        $('.notice h3').text('You have seen what the future are...')
+      } else if (game.player1Moves[0] === 'skip') {
+        $('.notice h3').text('You have skipped this round...')
+      } else if (game.player1Moves[0] === 'favor') {
+        $('.notice h3').text('You got a ' + game.player1Cards[game.player1Cards.length - 1].type + ' card from player 2...')
+      } else if (game.player1Moves[0] === 'attack') {
+        $('.notice h3').text('You have attacked player 2...')
+      } else {
+        $('.notice h3').text('')
+      }
+    }
+  }
+
   $('.explosive-meter h1').text(Math.round(1 / game.drawingPile.length * 100) + ' %')
+  */
 }
+
 
 function updateCards () {
   $('.player1Cards').css({

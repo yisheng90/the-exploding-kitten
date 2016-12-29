@@ -5,13 +5,14 @@ var game = {
   drawingPile: [],
   playedCards: [],
   currentPlayer: 1,
-  noOfPlayers: 2,
+  noOfPlayers: 1,
   isGameOver: false,
   whoWon: 0,
   noOfTurn: 0,
   explosionStatus: false,
   knownCards: [],
-  player1Moves: []
+  player1Moves: [],
+  player2Moves: []
 }
 
 
@@ -88,6 +89,7 @@ function playTurn (choice) {
   if (game.isGameOver === false) {
     if (game.explosionStatus === true) {
       if (game['player' + game.currentPlayer + 'Cards'][choice].type !== 'defuse') {
+        clearInterval(checkPlayer)
         alert('cannot play this card')
         return
       }
@@ -95,12 +97,14 @@ function playTurn (choice) {
     game.playedCards.push(game['player' + game.currentPlayer + 'Cards'][choice])
     if (game.currentPlayer === 1) {
       game.player1Moves.unshift(game['player' + game.currentPlayer + 'Cards'][choice].type)
-      console.log('push', game['player' + game.currentPlayer + 'Cards'][choice].type)
+    //  console.log('push', game['player' + game.currentPlayer + 'Cards'][choice].type)
     }
     game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
     game['playedCards'][game.playedCards.length - 1].render()
   }
   updateDisplay()
+  console.log('playr1', game.player1Moves);
+    console.log('playr2', game.player2Moves);
 }
 
 /* drawCard
@@ -116,6 +120,8 @@ function drawCard (num) {
     game.drawingPile.splice(num, 1)
     if (game.currentPlayer === 1) {
       game.player1Moves.unshift('draw')
+    } else {
+        game.player2Moves.unshift('draw')
     }
 
     if (game.noOfTurn < 1) {
@@ -125,11 +131,15 @@ function drawCard (num) {
     }
   }
 
-  if (game.knownCards.length > 0) {
+  if (game.knownCards.length > 0 && num === 0) {
     game.knownCards.shift()
   }
 
   isGameOver()
+  updateDisplay()
+  updateNotice()
+  console.log('playr1', game.player1Moves);
+    console.log('playr2', game.player2Moves);
 }
 
 /* isGameOver
@@ -140,7 +150,7 @@ function drawCard (num) {
 function isGameOver () {
   if (game.player1Cards.length === 0 || game.player2Cards.length === 0) {
     game.isGameOver = true
-    updateDisplay()
+    //updateDisplay()
   }
 }
 
@@ -155,9 +165,13 @@ function restart () {
   game.whoWon = 0
   game.noOfTurn = 0
   game.explosionStatus = false
+  game.player1Moves = []
+  game.knownCards = []
   time = 10
-  future = []
+  game.player2Moves = []
   startGame()
   updateNotice()
   updateDisplay()
+//  console.log(game);
+
 }
