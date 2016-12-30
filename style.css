@@ -14,25 +14,27 @@ body {
 /*---------Player's Cards Style---------*/
 .player1 {
   position:absolute;
-  bottom:0;
+  bottom:110px;;
   display:flex;
   justify-content: center;
   align-items: baseline;
   width: 100%;
+  height:0;
 }
 
 .player1Cards {
   padding: 0;
   position: relative;
   display: flex;
-  bottom:0;
+  bottom: 0;
+  height: 0;
 }
 
 .player1 button {
   height: 150px;
   width: 200px;
   position: absolute;
-  bottom:0;
+  bottom: 0;
   z-index: -1;
   text-align: left;
 }
@@ -207,7 +209,7 @@ button {
 .avatar {
   height: 80px;
   width: 80px;
-  border: 4px red solid;
+  border: 8px rgba(128,0,0,1) solid;
   border-radius: 100px;
   margin: 20px;
 }
@@ -221,6 +223,7 @@ margin-top: 0;
 .avatar1 {
 background: url('./img/avatar1.png');
 background-size: cover;
+margin-bottom: 0;
 }
 
 
@@ -302,4 +305,31 @@ background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
   display: none;
+}
+
+/*-----known-cards-----*/
+.known-cards {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  width: 50%;
+  height: 50%;
+  background: rgba(245,245,220	,0.85);
+  border: 4px solid rgba(132,189,0,0.9);
+  border-radius: 20px;
+  text-align: center;
+  display: none;
+}
+
+.known-cards h1 {
+  color: white;
+    text-shadow: 0 0 1px #000;
+}
+
+.known-cards span {
+  color: rgb(75,0,130);
+}
+
+.known-cards div {
+  border: 2px black dashed;
 }

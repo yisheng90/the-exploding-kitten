@@ -102,10 +102,6 @@ function updateNotice () {
 
   $('.notice h1').text('Player ' + player + '\'s Turn')
 
-  if(player === 1) {
-    $('.yourTurn').fadeIn()
-    $('.yourTurn').delay(300).fadeOut()
-  }
 
   if (game.noOfTurn !== 0) {
     $('.notice h2').text('X' + game.noOfTurn)
@@ -180,4 +176,25 @@ function updateCards () {
 
 function updateTime () {
   $('#time').text(Math.ceil(time))
+}
+
+function showTopCards () {
+  console.log('showing');
+  for (var i =0; i <=3; i++) {
+    if (game.drawingPile[i] !== undefined || game.drawingPile[i] !== null ) {
+      $('.known-cards div:nth-child('+(i+2)+')').attr('id', game.drawingPile[i].type)
+    }
+  }
+
+$('.known-cards').fadeIn()
+ $('.known-cards').delay(3000).fadeOut()
+
+}
+
+
+function showYourTurn() {
+  if(game.currentPlayer === 1) {
+    $('.yourTurn').fadeIn()
+    $('.yourTurn').delay(300).fadeOut()
+  }
 }

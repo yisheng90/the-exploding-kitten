@@ -163,6 +163,7 @@ function switchPlayer () {
   } else {
     game.currentPlayer = 1
   }
+  showYourTurn()
 }
 
 function restart () {

@@ -53,7 +53,7 @@ SeeTheFutureCards.prototype.render = function () {
   var topThreeCards = game.drawingPile.slice(0, 3)
 
   if (game.currentPlayer === 1) {
-    alert(JSON.stringify(topThreeCards))
+    showTopCards()
   } else {
     game.knownCards = topThreeCards
   }
