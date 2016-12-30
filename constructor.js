@@ -61,22 +61,17 @@ SeeTheFutureCards.prototype.render = function () {
 
 SkipCards.prototype.render = function () {
   console.log('Skip Cards Started')
-  if (game.currentPlayer === 1) {
-    game.currentPlayer = 2
-  } 
-
-  if (game.noOfTurn !== 0) {
-    game.noOfTurn += 1
-  }
+  switchPlayer()
   console.log('Skip Cards Ended, current player is', game.currentPlayer)
 }
 
 DefuseCards.prototype.render = function () {
   console.log('Defuse Cards Started')
+
   clearInterval(countDown)
   game.explosionStatus = false
   hideExplosive()
-  time = 10
+
   if (game.drawingPile[0].type === 'kitten') {
     shuffle()
   }
@@ -92,32 +87,36 @@ DefuseCards.prototype.render = function () {
 
 AttackCards.prototype.render = function () {
   console.log('Attack Cards Started')
-  if (game.currentPlayer === 1) {
-    game.currentPlayer = 2
-  } else {
-    game.currentPlayer = 1
-  }
+  switchPlayer()
   game.noOfTurn += 2
   console.log('Skip Cards Ended, current player is', game.currentPlayer)
 }
 
 var countDown
-var time = 10
+var time
 ExplodingKittenCards.prototype.render = function () {
   console.log('Exploding Started')
+
   game.explosionStatus = true
   showExplosive()
+
+  time =10
   countDown = setInterval(function () {
     time -= 0.1
     updateTime()
     console.log(time);
+
     if (time <= 0) {
       clearInterval(countDown)
       game.isGameOver = true
       game.whoWon = 3 - game.currentPlayer
+      clearInterval(flashKitten)
+      hideExplosive()
+      //alert(game.whoWon)
       updateDisplay()
     }
   }, 100)
+
   console.log('Explosing Ended');
 }
 

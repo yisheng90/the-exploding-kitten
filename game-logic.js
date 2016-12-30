@@ -89,21 +89,22 @@ function playTurn (choice) {
   if (game.isGameOver === false) {
     if (game.explosionStatus === true) {
       if (game['player' + game.currentPlayer + 'Cards'][choice].type !== 'defuse') {
-        clearInterval(checkPlayer)
-        alert('cannot play this card')
+        //clearInterval(checkPlayer)
+        //alert('cannot play this card')
         return
       }
     }
-    game.playedCards.push(game['player' + game.currentPlayer + 'Cards'][choice])
-    if (game.currentPlayer === 1) {
-      game.player1Moves.unshift(game['player' + game.currentPlayer + 'Cards'][choice].type)
+
+    game.playedCards.unshift(game['player' + game.currentPlayer + 'Cards'][choice])
+    game['player'+game.currentPlayer+'Moves'].unshift(game['player' + game.currentPlayer + 'Cards'][choice].type)
     //  console.log('push', game['player' + game.currentPlayer + 'Cards'][choice].type)
-    }
     game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
-    game['playedCards'][game.playedCards.length - 1].render()
+    game['playedCards'][0].render()
   }
-  updateDisplay()
-  console.log('playr1', game.player1Moves);
+
+    //  updateDisplay()
+    updateNotice()
+    console.log('playr1', game.player1Moves);
     console.log('playr2', game.player2Moves);
 }
 
@@ -113,19 +114,19 @@ function playTurn (choice) {
  */
 function drawCard (num) {
   console.log('Player', game.currentPlayer, 'drawCard')
+
   if (game.drawingPile[num].type === 'kitten') {
     game.drawingPile[num].render()
   } else {
     game['player' + game.currentPlayer + 'Cards'].push(game.drawingPile[num])
     game.drawingPile.splice(num, 1)
-    if (game.currentPlayer === 1) {
-      game.player1Moves.unshift('draw')
-    } else {
-        game.player2Moves.unshift('draw')
+
+    if (num === 0) {
+      game['player'+ game.currentPlayer +'Moves'].unshift('draw')
     }
 
     if (game.noOfTurn < 1) {
-      game.currentPlayer = 3 - game.currentPlayer
+      switchPlayer()
     } else {
       game.noOfTurn -= 1
     }
@@ -138,7 +139,7 @@ function drawCard (num) {
   isGameOver()
   updateDisplay()
   updateNotice()
-  console.log('playr1', game.player1Moves);
+    console.log('playr1', game.player1Moves);
     console.log('playr2', game.player2Moves);
 }
 
@@ -148,9 +149,19 @@ function drawCard (num) {
  */
 
 function isGameOver () {
-  if (game.player1Cards.length === 0 || game.player2Cards.length === 0) {
+  if (game.player1Cards.length === 0 || game.player2Cards.length === 0 ) {
     game.isGameOver = true
     //updateDisplay()
+  }// else if (game.explosionStatus === true && (game['player'+game.currentPlayer+'Cards'].includes('defuse') !== true)) {
+    //game.isGameOver = true
+  //}
+}
+
+function switchPlayer () {
+  if (game.currentPlayer === 1) {
+    game.currentPlayer = 2
+  } else {
+    game.currentPlayer = 1
   }
 }
 

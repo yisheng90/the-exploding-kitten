@@ -8,7 +8,7 @@ checkPlayer = setInterval(function () {
 
 
 function computerPlayer () {
-  alert('Computer')
+//  alert('Computer')
   console.log('move', game.player1Moves)
   var currentCards = {}
 
@@ -21,7 +21,9 @@ function computerPlayer () {
   if (game.explosionStatus === true) {
     if (Object.keys(currentCards).includes('defuse')) {
       currentCards['defuse'] = 1000
+
     } else {
+
       clearInterval(checkPlayer)
       clearInterval(countDown)
       clearInterval(flashKitten)
@@ -121,7 +123,6 @@ function computerPlayer () {
   } else {
     for (var i = 0; i < game.player2Cards.length; i++) {
       if (game.player2Cards[i].type === max[0]) {
-        game.player2Moves.unshift(game.player2Cards[i].type)
         playTurn(i)
         break
       }
