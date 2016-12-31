@@ -12,18 +12,17 @@ $(document).ready(function () {
     } else {
       alert('It is not your turn!')
     }
-    updateDisplay()
-    updateNotice()
+    //updateDisplay()
+    //updateNotice()
   })
 
-
-
   // DrawingPile click
-  $('.drawingPile').click(function () {
+  $('.container').off('click', '.drawingPile')
+  $('.container').on('click', '.drawingPile', function () {
     if (game.currentPlayer === 1) {
       drawCard(0)
-      updateDisplay()
-      updateNotice()
+    //  updateDisplay()
+    //  updateNotice()
     }
   })
 
@@ -35,12 +34,13 @@ $(document).ready(function () {
     $('#avatar1').removeAttr('style')
     $('#avatar2').removeAttr('style')
     clearInterval(flashKitten)
+    clearInterval(countDown)
     restart()
-    checkPlayer = setInterval(function () {
+  /*  checkPlayer = setInterval(function () {
       if (game.currentPlayer === 2) {
         computerPlayer()
       }
-    }, 5000)
+    }, 5000)*/
   })
 })
 
@@ -63,10 +63,11 @@ function updateDisplay () {
   }
 
   if (game.playedCards.length > 0) {
-    $('.played-cards').removeAttr('id')
-    .attr('id', game.playedCards[0].type)
+    $('.played-cards').delay(2000).removeAttr('id')
+   .delay(2000).attr('id', game.playedCards[0].type)
   }
 
+  $('.drawingPile').remove()
   $('.player1 button').remove()
   $('.player2 button').remove()
   updateCards()
@@ -102,16 +103,13 @@ function updateNotice () {
 
   $('.notice h1').text('Player ' + player + '\'s Turn')
 
-
   if (game.noOfTurn !== 0) {
-    $('.notice h2').text('X' + game.noOfTurn)
+    $('.notice h2').text('x' + game.noOfTurn + ' draw')
   } else {
     $('.notice h2').text('')
   }
 
-
-
-
+/*
   if (player === 1) {
     name = 'You'
   } else {
@@ -133,16 +131,27 @@ function updateNotice () {
   } else {
     $('.notice h3').text('')
   }
-
+*/
 
   $('.explosive-meter h1').text(Math.round(1 / game.drawingPile.length * 100) + ' %')
 }
-
 
 function updateCards () {
   $('.player1Cards').css({
     'width': (50 * (game.player1Cards.length - 2) + 200) + 'px'
   })
+
+  var align = 0
+  //  alert(game.drawingPile.length)
+
+  for (var i = 0; i<game.drawingPile.length ; i++) {
+  //  alert($('.drawingPile').length)
+    $('.relative').append('<div class="drawingPile">')
+    $('.drawingPile:nth-child(' + (i+1) + ')').css({
+      'right': align + 'px'
+    })
+    align += 2
+  }
 
   var left = 0
   for (var i = 0; i < game.player1Cards.length; i++) {
@@ -162,14 +171,16 @@ function updateCards () {
   // Player 1 hover
   $('.player1Cards button').hover(function () {
     var index = $('.player1Cards button').index(this) + 1
+    var height = $('.player1Cards button:nth-child(' + index + ')').css('height')
     $('.player1Cards button:nth-child(' + index + ')').css({
-      'height': '200px'
+      'height': parseInt(height) + 50 +'px'
     })
   },
   function () {
     var index = $('.player1Cards button').index(this) + 1
+    var height = $('.player1Cards button:nth-child(' + index + ')').css('height')
     $('.player1Cards button:nth-child(' + index + ')').css({
-      'height': '150px'
+      'height': (parseInt(height) - 50) + 'px'
     })
   })
 }
@@ -179,22 +190,24 @@ function updateTime () {
 }
 
 function showTopCards () {
-  console.log('showing');
-  for (var i =0; i <=3; i++) {
-    if (game.drawingPile[i] !== undefined || game.drawingPile[i] !== null ) {
-      $('.known-cards div:nth-child('+(i+2)+')').attr('id', game.drawingPile[i].type)
-    }
+  console.log('showing')
+  var length = 3
+  if (game.drawingPile.length < length) {
+    length = game.drawingPile.length
+  }
+  for (var i = 0; i < length; i++) {
+    //if (game.drawingPile[i] !== undefined || game.drawingPile[i] !== null) {
+      $('.known-cards div:nth-child(' + (i + 2) + ')').attr('id', game.drawingPile[i].type)
+    //}
   }
 
-$('.known-cards').fadeIn()
- $('.known-cards').delay(3000).fadeOut()
-
+  $('.known-cards').fadeIn()
+  $('.known-cards').delay(3000).fadeOut()
 }
 
-
-function showYourTurn() {
-  if(game.currentPlayer === 1) {
-    $('.yourTurn').fadeIn()
-    $('.yourTurn').delay(300).fadeOut()
+function showYourTurn () {
+  if (game.currentPlayer === 1) {
+    $('.yourTurn').delay(300).fadeIn()
+    $('.yourTurn').delay(500).fadeOut()
   }
 }

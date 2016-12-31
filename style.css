@@ -1,7 +1,32 @@
+#warning-message { display: none; }
+  @media only screen and (orientation:portrait){
+      #wrapper { display:none; }
+      #warning-message { display:flex; }
+  }
+  @media only screen and (orientation:landscape){
+      #warning-message { display:none; }
+  }
+
+
+
 body {
+  height: 100%;
+  width:100%;
   background: url('./img/background.jpg');
   background-size: cover;
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
+}
+
+#warning-message {
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+  height: 100%;
+  margin: auto;
+}
+
+#warning-message h1{
+  color: white;
 }
 
 .logo {
@@ -28,6 +53,7 @@ body {
   display: flex;
   bottom: 0;
   height: 0;
+  justify-content: flex-end;
 }
 
 .player1 button {
@@ -35,15 +61,16 @@ body {
   width: 200px;
   position: absolute;
   bottom: 0;
-  z-index: -1;
+
   text-align: left;
 }
 
 .player2 {
   display:inline-flex;
   text-align: center;
-  width:70%;
+  width:60%;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .player2 button {
@@ -66,8 +93,16 @@ body {
   display:flex;
   justify-content: space-around;
   align-content: space-between;
-  height: 400px;
+  height: 500px;
   align-items: center;
+
+}
+
+.flex-first {
+  display:flex;
+  align-items: center;
+  width: 40%;
+
 }
 
 .drawingPile {
@@ -75,8 +110,9 @@ body {
   background-size: contain;
   height: 240px;
   width: 180px;
+  border: 1px grey solid;
   border-radius: 20px;
-
+  position: absolute;
 }
 
 .played-cards {
@@ -111,12 +147,10 @@ button {
 
 .notice {
   /*position: absolute;*/
-  top: 30%;
-  right: 5%;
-  height: 200px;
-  width: 200px;
+  display: flex;
+  align-items: center;
   background: url('./img/notice.png');
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
   padding: 20px;
@@ -332,4 +366,186 @@ margin-bottom: 0;
 
 .known-cards div {
   border: 2px black dashed;
+}
+
+.relative {
+  position: relative;
+  left: 200px;
+}
+
+
+@media only screen and (max-width: 1200px) and (orientation: landscape) {
+  .container {
+    height: 350px;
+  }
+}
+
+
+@media only screen and (max-width: 1000px) and (orientation: landscape) {
+
+
+  .container {
+    height: 200px;
+  }
+
+  .played-cards,
+  .drawingPile {
+    height: 200px;
+    width: 150px;
+  }
+
+
+  .relative {
+    left: 180px;
+  }
+
+  .explosive-meter {
+    height: 150px;
+    width: 150px;
+  }
+
+  .explosive-meter h1 {
+    font-size: 25px;
+  }
+
+  .player1Cards button {
+    height: 100px;
+  }
+
+  .notice {
+    width: 150px;
+  }
+
+  .notice h1 {
+    font-size: 20px;
+  }
+
+  .notice h2 {
+    font-size: 15px;
+  }
+
+
+}
+
+@media only screen and (max-width: 900px) and (orientation: landscape) {
+
+  .container {
+    height: 200px;
+  }
+
+  .played-cards,
+  .drawingPile {
+    height: 120px;
+    width: 90px;
+  }
+
+  .relative {
+    left: 120px;
+  }
+
+  .explosive-meter {
+    height: 100px;
+    width: 100px;
+  }
+
+  .explosive-meter h1 {
+    font-size: 15px;
+  }
+
+  .player1 {
+    bottom: 50px;;
+  }
+
+  .player1Cards button {
+    height: 80px;
+    width: 150px;
+  }
+
+  .player2 button {
+    height: 40px;
+    width: 30px;
+  }
+
+  .notice {
+    width: 100px;
+  }
+
+  .notice h1 {
+    font-size: 15px;
+  }
+
+  .notice h2 {
+    font-size: 10px;
+  }
+
+  .avatar {
+    height: 30px;
+    width: 30px;
+    border: 2px rgba(128,0,0,1) solid;
+    border-radius: 100px;
+    margin: 20px;
+  }
+
+  .avatar2 {
+  margin-top: 0;
+  }
+
+  .avatar1 {
+  margin-bottom: 0;
+  }
+
+}
+
+@media only screen and (max-width: 700px) and (orientation: landscape) {
+
+  .logo {
+    width: 20%;
+    height: 10%;
+    background-size: contain;
+  }
+}
+
+@media only screen and (max-width: 1200px) and (orientation: portrait) {
+  body {
+    text-align: center;
+  }
+
+  .logo {
+    width: 20%;
+    height: 10%;
+    margin: 0 auto;
+    opacity: 0.8;
+  }
+
+  .player2 {
+    width: 100%;
+    margin-top: 50px;
+  }
+
+  .container {
+    width: 100%;
+
+  }
+  .flex-first {
+    width: 50%;
+
+  }
+
+  .relative {
+    left: -30%;
+  }
+
+  .explosive-meter {
+
+    background: rgba(0,0,0,0.8)
+  }
+
+  .played-cards {
+
+  }
+
+  .notice {
+    display: none;
+  }
+
 }

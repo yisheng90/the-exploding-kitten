@@ -21,10 +21,8 @@ function computerPlayer () {
   if (game.explosionStatus === true) {
     if (Object.keys(currentCards).includes('defuse')) {
       currentCards['defuse'] = 1000
-
     } else {
-
-      clearInterval(checkPlayer)
+      //clearInterval(checkPlayer)
       clearInterval(countDown)
       clearInterval(flashKitten)
       game.isGameOver = true
@@ -131,8 +129,8 @@ function computerPlayer () {
 
   console.log(currentCards)
 
-  updateDisplay()
-  updateNotice()
+  //updateDisplay()
+  //updateNotice()
 }
 // console.log(cards[0]);
 

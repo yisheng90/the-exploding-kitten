@@ -105,7 +105,6 @@ ExplodingKittenCards.prototype.render = function () {
     time -= 0.1
     updateTime()
     console.log(time);
-
     if (time <= 0) {
       clearInterval(countDown)
       game.isGameOver = true
@@ -115,7 +114,10 @@ ExplodingKittenCards.prototype.render = function () {
       //alert(game.whoWon)
       updateDisplay()
     }
+
   }, 100)
+
+
 
   console.log('Explosing Ended');
 }

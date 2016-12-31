@@ -102,7 +102,7 @@ function playTurn (choice) {
     game['playedCards'][0].render()
   }
 
-    //  updateDisplay()
+    updateDisplay()
     updateNotice()
     console.log('playr1', game.player1Moves);
     console.log('playr2', game.player2Moves);
@@ -125,7 +125,7 @@ function drawCard (num) {
       game['player'+ game.currentPlayer +'Moves'].unshift('draw')
     }
 
-    if (game.noOfTurn < 1) {
+    if (game.noOfTurn <= 1) {
       switchPlayer()
     } else {
       game.noOfTurn -= 1

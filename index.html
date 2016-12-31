@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" orientation="landscape">
     <title>The Exploding Kitten</title>
     <link rel="stylesheet" href="style.css">
     <script
@@ -14,19 +15,28 @@
     <script src="main.js"></script>
   </head>
   <body>
-    <img src="./img/logo.png" class="logo">
 
+    <div id="warning-message">
+    <h1>This game is only avilable in Landscape Mode</h1>
+    <img src="./img/logo.png" class="logo">
+    </div>
+
+
+<div id="wrapper">
+  <img src="./img/logo.png" class="logo">
     <div class="player2"><div class="avatar avatar2"></div></div>
 
   <div class='container'>
-    <div class='container'>
-    <div class="explosive-meter">
-      <h1></h1>
+    <div class='flex-first'>
+      <div class="explosive-meter">
+        <h1></h1>
+      </div>
+      <div class='container relative'>
+      </div>
     </div>
 
-    <div class="drawingPile">
-    </div>
-  </div>
+
+
 
     <div class="played-cards dotted-border">
     </div>
@@ -39,7 +49,7 @@
   </div>
 
     <div class="player1">
-
+      <div class="avatar avatar1"></div>
       <div class="player1Cards"></div>
     </div>
 
@@ -69,6 +79,7 @@
       <div  class='explosive-kitten'></div>
       <div  class='explosive-kitten'></div>
     </div>
+  </div>
 
   </body>
 </html>
