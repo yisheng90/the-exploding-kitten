@@ -3,6 +3,11 @@
       #wrapper { display:none; }
       #warning-message { display:flex; }
   }
+  @media only screen and (max-height:300px){
+      #wrapper { display:none; }
+      #warning-message { display:flex; }
+  }
+
   @media only screen and (orientation:landscape){
       #warning-message { display:none; }
   }
@@ -388,6 +393,8 @@ margin-bottom: 0;
     height: 200px;
   }
 
+  .player2Explosive,
+  .explosive-kitten,
   .played-cards,
   .drawingPile {
     height: 200px;
@@ -433,11 +440,18 @@ margin-bottom: 0;
     height: 200px;
   }
 
+
   .played-cards,
   .drawingPile {
     height: 120px;
     width: 90px;
   }
+
+  .player2Explosive,
+.explosive-kitten {
+  height: 80px;
+  width: 50px;
+}
 
   .relative {
     left: 120px;
@@ -458,7 +472,7 @@ margin-bottom: 0;
 
   .player1Cards button {
     height: 80px;
-    width: 150px;
+    width: 100px;
   }
 
   .player2 button {
