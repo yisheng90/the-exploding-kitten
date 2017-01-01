@@ -155,6 +155,17 @@ function isGameOver () {
   }// else if (game.explosionStatus === true && (game['player'+game.currentPlayer+'Cards'].includes('defuse') !== true)) {
     //game.isGameOver = true
   //}
+  whoWon()
+}
+
+function whoWon() {
+  if(game.currentPlayer === 1) {
+    return 2
+  } else if (game.currentPlayer === 2) {
+    return 1
+  } else {
+    return 0
+  }
 }
 
 function switchPlayer () {

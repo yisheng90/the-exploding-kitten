@@ -108,7 +108,7 @@ ExplodingKittenCards.prototype.render = function () {
     if (time <= 0) {
       clearInterval(countDown)
       game.isGameOver = true
-      game.whoWon = 3 - game.currentPlayer
+      whoWon()
       clearInterval(flashKitten)
       hideExplosive()
       //alert(game.whoWon)

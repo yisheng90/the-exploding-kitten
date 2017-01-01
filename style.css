@@ -61,13 +61,17 @@ body {
   justify-content: flex-end;
 }
 
-.player1 button {
+.player1Cards div {
   height: 150px;
-  width: 200px;
+  width: 180px;
   position: absolute;
   bottom: 0;
-
+  border-radius: 20px 20px 0 0;
   text-align: left;
+}
+
+.tall {
+  height: 200px;
 }
 
 .player2 {
@@ -415,7 +419,7 @@ margin-bottom: 0;
     font-size: 25px;
   }
 
-  .player1Cards button {
+  .player1Cards div {
     height: 100px;
   }
 
@@ -470,7 +474,7 @@ margin-bottom: 0;
     bottom: 50px;;
   }
 
-  .player1Cards button {
+  .player1Cards div {
     height: 80px;
     width: 100px;
   }

@@ -4,9 +4,9 @@ $(document).ready(function () {
   updateCards()
 
   // Player 1 Cards click
-  $('.player1Cards').off('click', 'button')
-  $('.player1Cards').on('click', 'button', function () {
-    var index = $('.player1Cards button').index(this)
+  $('.player1Cards').off('click', 'div')
+  $('.player1Cards').on('click', 'div', function () {
+    var index = $('.player1Cards div').index(this)
     if (game.currentPlayer === 1 && game.isGameOver === false) {
       playTurn((index))
     } else {
@@ -15,6 +15,7 @@ $(document).ready(function () {
     //updateDisplay()
     //updateNotice()
   })
+
 
   // DrawingPile click
   $('.container').off('click', '.drawingPile')
@@ -47,14 +48,15 @@ $(document).ready(function () {
 // Update Game Interface
 function updateDisplay () {
   if (game.isGameOver === true) {
+
     $('.gameOver').fadeIn()
 
-    if (game.whoWon === 1) {
+    if (whoWon() === 1) {
       $('#avatar1').css({
         'width': '300px',
         'height': '300px'
       })
-    } else {
+    } else if (whoWon() === 2){
       $('#avatar2').css({
         'width': '300px',
         'height': '300px'
@@ -62,13 +64,15 @@ function updateDisplay () {
     }
   }
 
-  if (game.playedCards.length > 0) {
-    $('.played-cards').delay(2000).removeAttr('id')
-   .delay(2000).attr('id', game.playedCards[0].type)
-  }
+if(game.playedCards.length > 0) {
+  $('.played-cards').removeAttr('id')
+  $('.played-cards').attr('id', game.playedCards[0].type)
+}
+
+
 
   $('.drawingPile').remove()
-  $('.player1 button').remove()
+  $('.player1Cards div').remove()
   $('.player2 button').remove()
   updateCards()
 }
@@ -155,10 +159,10 @@ function updateCards () {
 
   var left = 0
   for (var i = 0; i < game.player1Cards.length; i++) {
-    $('.player1Cards').append('<button></button>')
+    $('.player1Cards').append('<div></div>')
 
-    $('.player1Cards button:nth-child(' + (i + 1) + ')').css({
-      'left': left + 'px'
+    $('.player1Cards div:nth-child(' + (i + 1) + ')').css({
+      'left': left + 'px',
     })
     .attr('id', game.player1Cards[i].type)
     left += 50
@@ -168,21 +172,60 @@ function updateCards () {
     $('.player2').prepend('<button></button>')
   }
 
+
+
+
   // Player 1 hover
-  $('.player1Cards button').hover(function () {
-    var index = $('.player1Cards button').index(this) + 1
-    var height = $('.player1Cards button:nth-child(' + index + ')').css('height')
-    $('.player1Cards button:nth-child(' + index + ')').css({
+
+  $('.player1Cards div').hover(function () {
+    var index = $('.player1Cards div').index(this) + 1
+    var height = $('.player1Cards div:nth-child(' + index + ')').css('height')
+    $('.player1Cards div:nth-child(' + index + ')').css({
       'height': parseInt(height) + 50 +'px'
     })
   },
   function () {
-    var index = $('.player1Cards button').index(this) + 1
-    var height = $('.player1Cards button:nth-child(' + index + ')').css('height')
-    $('.player1Cards button:nth-child(' + index + ')').css({
-      'height': (parseInt(height) - 50) + 'px'
+    var index = $('.player1Cards div').index(this) + 1
+    var height = $('.player1Cards div:nth-child(' + index + ')').css('height')
+    $('.player1Cards div:nth-child(' + index + ')').css({
+      'height': (parseInt(height) - 50) + 'px',
+        'bottom': 0
     })
   })
+
+/*
+  $(function () {
+    var index
+    $('.player1Cards div').draggable({revert: true,
+      start: function () {
+        index = $('.player1Cards div').index(this)
+
+        $(this).css({
+          height: $('.played-cards').css('height'),
+          width: $('.played-cards').css('width')
+        })
+      },
+      stop: function () {
+        $(this).css({
+          height: '',
+          width:''
+
+        })
+      }
+    })
+
+    $('.played-cards').droppable({
+      drop: function (event, ui) {
+          if (game.currentPlayer === 1 && game.isGameOver === false) {
+            playTurn((index))
+          } else {
+            alert('It is not your turn!')
+          }
+      }
+    })
+  })
+
+*/
 }
 
 function updateTime () {
