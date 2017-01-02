@@ -1,5 +1,16 @@
 //Cards and Cards' Methods
 
+var cardsProperties = {
+  'kitten': 'Unless you have a DEFUSE CARD, you\'re dead.',
+  'attack': 'End your turn(s) without drawing and force the next player to take 2 turns in a row. (If the victim of an ATTACK CARD plays an ATTACK CARD, their turns are immediately over, and the next player must take 2 turns.)',
+  'skip':'Immediately end your turn without drawing a card. If you play a SKIP CARD as a defense against an ATTACK CARD, it only ends one of the two turns. Two SKIP CARDS would end both turns.',
+  'favor': 'Force any other player to give you 1 card from their hand. The cards is randomly assigned.',
+  'shuffle': 'Shuffle the Draw Pile without viewing the cards until told to stop. (Useful when you know there\'s an EXPLODING KITTEN coming.)',
+  'see-the-future': 'Peek at the top 3 cards from the Draw Pile.',
+  'draw-from-bottom': 'Draw a card from the bottom of Draw Pile.',
+  'defuse': 'Save yourself from exploding.'
+}
+
 function Cards () {
   this.type = 'normal'
   this.render

@@ -22,6 +22,79 @@ body {
   background-repeat: repeat-y;
 }
 
+.main {
+  display:flex;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(86,3,25,1);
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  align-content: space-around;
+}
+
+.main div {
+  display: flex;
+  width: 100%;
+
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.play,
+.disclaimer {
+  height: 10%;
+}
+
+
+.main h1, p {
+  width: 100%;
+  text-align: center;
+  margin: 0;
+}
+
+.instructions {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content:center;
+  width: 100%;
+  height: 60%;
+  background: rgba(0,0,0,0.5)
+}
+
+.instructions div {
+  display: flex;
+  background: rgba(255,255,255,0.6);
+  height: 95%;
+  width: calc((90%-50px)/3);
+  margin: 5px;
+  flex-wrap: wrap;
+  align-content: space-around;
+}
+
+.cards div {
+  height: 22.5%;
+  width: 20%;
+}
+
+.rules img {
+  height: 50%;
+  width:auto;
+}
+
+.how-to-play ol {
+  height: 80%;
+}
+
+.play button {
+  width: 10%;
+  height: 40%;
+  border-radius: 20px;
+
+}
+
+
 #warning-message {
   flex-wrap: wrap;
   justify-content: center;
@@ -39,6 +112,10 @@ body {
   opacity: 0.5;
   width: 200px;
   height: auto;
+}
+
+.game {
+  display:none;
 }
 
 /*---------Player's Cards Style---------*/

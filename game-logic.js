@@ -202,6 +202,7 @@ function restart () {
   game.knownCards = []
   time = 10
   game.player2Moves = []
+  game.moves = []
   startGame()
   updateNotice()
   updateDisplay()
