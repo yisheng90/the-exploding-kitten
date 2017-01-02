@@ -12,7 +12,8 @@ var game = {
   explosionStatus: false,
   knownCards: [],
   player1Moves: [],
-  player2Moves: []
+  player2Moves: [],
+  moves: []
 }
 
 
@@ -97,6 +98,9 @@ function playTurn (choice) {
 
     game.playedCards.unshift(game['player' + game.currentPlayer + 'Cards'][choice])
     game['player'+game.currentPlayer+'Moves'].unshift(game['player' + game.currentPlayer + 'Cards'][choice].type)
+    var temp = {}
+    temp[game.currentPlayer] = game['player' + game.currentPlayer + 'Cards'][choice].type
+    game.moves.unshift( temp)
     //  console.log('push', game['player' + game.currentPlayer + 'Cards'][choice].type)
     game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
     game['playedCards'][0].render()
@@ -106,6 +110,7 @@ function playTurn (choice) {
     updateNotice()
     console.log('playr1', game.player1Moves);
     console.log('playr2', game.player2Moves);
+    console.log('moves',game.moves);
 }
 
 /* drawCard
@@ -123,9 +128,13 @@ function drawCard (num) {
 
     if (num === 0) {
       game['player'+ game.currentPlayer +'Moves'].unshift('draw')
+      var temp = {}
+      temp[game.currentPlayer] = 'draw'
+      game.moves.unshift(temp)
     }
 
-    if (game.noOfTurn <= 1) {
+
+    if (game.noOfTurn < 1) {
       switchPlayer()
     } else {
       game.noOfTurn -= 1
@@ -141,6 +150,7 @@ function drawCard (num) {
   updateNotice()
     console.log('playr1', game.player1Moves);
     console.log('playr2', game.player2Moves);
+    console.log('moves',game.moves);
 }
 
 /* isGameOver

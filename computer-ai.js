@@ -4,7 +4,7 @@ checkPlayer = setInterval(function () {
   if (game.currentPlayer === 2) {
     computerPlayer()
   }
-}, 5000)
+}, 6000)
 
 
 function computerPlayer () {

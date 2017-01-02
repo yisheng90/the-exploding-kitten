@@ -77,7 +77,7 @@ DefuseCards.prototype.render = function () {
   }
 
   if (game.noOfTurn === 0) {
-    game.currentPlayer = 3 - game.currentPlayer
+    switchPlayer()
   } else {
     game.noOfTurn -= 1
   }
