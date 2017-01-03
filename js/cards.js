@@ -114,6 +114,7 @@ ExplodingKittenCards.prototype.render = function () {
   console.log('Exploding Started')
 
   game.explosionStatus = true
+  playAudio(0)
   showExplosive()
 
   time = 10
@@ -124,6 +125,7 @@ ExplodingKittenCards.prototype.render = function () {
     if (time <= 0) {
       clearInterval(countDown)
       game.isGameOver = true
+      playAudio(1)
       whoWon()
       clearInterval(flashKitten)
       hideExplosive()

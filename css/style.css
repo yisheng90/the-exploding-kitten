@@ -17,7 +17,7 @@
 body {
   height: 100%;
   width:100%;
-  background: url('./img/background.jpg');
+  background: url('../img/background.jpg');
   background-size: cover;
   background-repeat: repeat-y;
   margin: 0;
@@ -161,7 +161,7 @@ body {
 }
 
 .player2 button {
-  background: url('./img/card-cover.png');
+  background: url('../img/card-cover.png');
   background-size: cover;
   background-repeat: no-repeat;
   height: 70px;
@@ -193,7 +193,7 @@ body {
 }
 
 .drawingPile {
-  background: url('./img/card-cover.png');
+  background: url('../img/card-cover.png');
   background-size: contain;
   height: 240px;
   width: 180px;
@@ -206,7 +206,7 @@ body {
   height: 240px;
   width: 180px;
   border-radius: 20px;
-  background: url('./img/placeyourcardhere.png');
+  background: url('../img/placeyourcardhere.png');
   background-size: cover;
 }
 
@@ -225,7 +225,7 @@ button {
   left: 11%;
   height: 200px;
   width: 200px;
-  background: url('./img/bomb.png');
+  background: url('../img/bomb.png');
   background-size: cover;
   text-align: center;
   line-height: 200px;
@@ -312,7 +312,7 @@ button {
   left: 45%;
   width: 80px;
   height: 100px;
-  background: url('./img/kitten-card.png');
+  background: url('../img/kitten-card.png');
   background-size: contain;
   background-repeat: no-repeat;
   margin: 20px;
@@ -367,13 +367,13 @@ button {
 }
 
 .avatar2 {
-background: url('./img/avatar2.png');
+background: url('../img/avatar2.png');
 background-size: cover;
 margin-top: 0;
 }
 
 .avatar1 {
-background: url('./img/avatar1.png');
+background: url('../img/avatar1.png');
 background-size: cover;
 margin-bottom: 0;
 }
@@ -382,61 +382,61 @@ margin-bottom: 0;
 /*---------Cards id Style---------*/
 
 #shuffle {
-  background: url('./img/shuffle-card.png');
+  background: url('../img/shuffle-card.png');
   background-size: cover;
 }
 
 #skip {
-  background: url('./img/skip-card.png');
+  background: url('../img/skip-card.png');
   background-size: cover;
 }
 
 #see-the-future {
-  background: url('./img/seethefuture-card.png');
+  background: url('../img/seethefuture-card.png');
   background-size: cover;
 }
 
 #draw-from-bottom {
-  background: url('./img/drawfrombottom.png');
+  background: url('../img/drawfrombottom.png');
   background-size: cover;
 }
 
 #defuse {
-  background: url('./img/defuse-card.png');
+  background: url('../img/defuse-card.png');
   background-size: cover;
 }
 
 #attack {
-  background: url('./img/attack-card.png');
+  background: url('../img/attack-card.png');
   background-size: cover;
 }
 
 #kitten {
-  background: url('./img/kitten-card.png');
+  background: url('../img/kitten-card.png');
   background-size: cover;
 }
 
 #favor {
-  background: url('./img/favor-card.png');
+  background: url('../img/favor-card.png');
   background-size: cover;
 }
 
 #place-your-defuse {
   border: 2px white dashed;
-  background: url('./img/place-your-defuse.png');
+  background: url('../img/place-your-defuse.png');
   background-size: cover;
   opacity: 0.8;
 }
 
 #avatar1 {
-  background: url('./img/avatar1.png');
+  background: url('../img/avatar1.png');
   background-size: cover;
   width: 200px;
   height: 200px;
 }
 
 #avatar2 {
-  background: url('./img/avatar2.png');
+  background: url('../img/avatar2.png');
   background-size: cover;
   width: 200px;
   height: 200px;
@@ -452,7 +452,7 @@ margin-bottom: 0;
   left: 35%;
   width: 40%;
   height: 40%;
-  background: url('./img/your-turn.png');
+  background: url('../img/your-turn.png');
   background-size: contain;
   background-repeat: no-repeat;
   text-align: center;

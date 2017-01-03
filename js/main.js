@@ -1,4 +1,8 @@
+
+//Main Event Listener
 $(document).ready(function () {
+
+
   $('.play button').click(function () {
     $('.main').hide()
     $('.game').fadeIn()
@@ -93,6 +97,10 @@ function updateDisplay () {
   $('.player2 button').remove()
   updateCards()
 }
+
+
+
+//Other helping fucntions
 
 var flashKitten
 function showExplosive () {
@@ -272,14 +280,7 @@ function showYourTurn () {
 function showSelect () {
   $('.select').fadeIn()
 }
-/*
-<ul>
-<li><strong>Exploding Kitten:</strong> Unless you have a DEFUSE CARD, you're dead.</li>
-<li><strong>Attack:</strong> End your turn(s) without drawing and force the next player to take 2 turns in a row. (If the victim of an ATTACK CARD plays an ATTACK CARD, their turns are immediately over, and the next player must take 2 turns.)</li>
-<li><strong>Skip:</strong>Immediately end your turn without drawing a card. If you play a SKIP CARD as a defense against an ATTACK CARD, it only ends one of the two turns. Two SKIP CARDS would end both turns.</li>
-<li><strong>Favor:</strong>Force any other player to give you 1 card from their hand. The cards is randomly assigned.</li>
-<li><strong>Shuffle:</strong>Shuffle the Draw Pile without viewing the cards until told to stop. (Useful when you know there's an EXPLODING KITTEN coming.</li>
-<li><strong>See The Future:</strong>Peek at the top 3 cards from the Draw Pile.</li>
-<li><strong>Draw from Bottom:</strong>Draw a card from the bottom of Draw Pile.</li>
-</ul>
-*/
+
+function playAudio(index) {
+  $('audio')[index].play()
+}
