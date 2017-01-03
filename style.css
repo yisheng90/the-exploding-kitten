@@ -20,6 +20,7 @@ body {
   background: url('./img/background.jpg');
   background-size: cover;
   background-repeat: repeat-y;
+  margin: 0;
 }
 
 .main {
@@ -456,6 +457,35 @@ margin-bottom: 0;
   background-repeat: no-repeat;
   text-align: center;
   display: none;
+}
+
+/*-----Select------*/
+.select {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-content: space-between;
+  flex-wrap: wrap;
+  top: 25%;
+  left: 30%;
+  width: 40%;
+  height: 40%;
+  background: rgba(255,255,255,0.8);
+  text-align: center;
+  display: none
+}
+
+.select button {
+  width: 60%;
+  height: calc(50%/5);
+  border-radius: 20px;
+}
+
+.select button:hover {
+  background: rgba(255,167,0,1);
+  border-color: rgba(150,0,24,1);
+  color: white;
+
 }
 
 /*-----known-cards-----*/

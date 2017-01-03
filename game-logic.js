@@ -100,7 +100,7 @@ function playTurn (choice) {
     game['player'+game.currentPlayer+'Moves'].unshift(game['player' + game.currentPlayer + 'Cards'][choice].type)
     var temp = {}
     temp[game.currentPlayer] = game['player' + game.currentPlayer + 'Cards'][choice].type
-    game.moves.unshift( temp)
+    game.moves.unshift(temp)
     //  console.log('push', game['player' + game.currentPlayer + 'Cards'][choice].type)
     game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
     game['playedCards'][0].render()
@@ -208,4 +208,27 @@ function restart () {
   updateDisplay()
 //  console.log(game);
 
+}
+
+function checkTurns () {
+  if (game.noOfTurn === 0) {
+    switchPlayer()
+  } else {
+    game.noOfTurn -= 1
+  }
+  return true
+}
+
+function insertKitten(index) {
+  var temp = game.drawingPile[0]
+  if (index > 0 && index <= 2) {
+    game.drawingPile.shift()
+    game.drawingpile.splice(index, 0 ,temp)
+  } else if (index === 3) {
+    game.drawingPile.shift()
+    game.drawingPile.push(temp)
+  } else if (index === 4) {
+    shuffle()
+  }
+  checkTurns()
 }

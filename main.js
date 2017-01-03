@@ -32,12 +32,12 @@ $(document).ready(function () {
 
   // Restart
   $('#restart').click(function () {
+    clearInterval(flashKitten)
     $('.gameOver').hide()
     $('.explosive').hide()
     $('.played-cards').removeAttr('id')
     $('#avatar1').removeAttr('style')
     $('#avatar2').removeAttr('style')
-    clearInterval(flashKitten)
     clearInterval(countDown)
     restart()
   /*  checkPlayer = setInterval(function () {
@@ -56,6 +56,13 @@ $(document).ready(function () {
     $('.cards p').text('')
   }
 )
+
+  //select
+  $('.select button').click(function () {
+    var index = $(this).index()
+    insertKitten((index-1))
+    $('.select').hide()
+  })
 })
 
 // Update Game Interface
@@ -262,6 +269,9 @@ function showYourTurn () {
   }
 }
 
+function showSelect () {
+  $('.select').fadeIn()
+}
 /*
 <ul>
 <li><strong>Exploding Kitten:</strong> Unless you have a DEFUSE CARD, you're dead.</li>
