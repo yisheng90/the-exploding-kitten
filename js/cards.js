@@ -72,11 +72,7 @@ SeeTheFutureCards.prototype.render = function () {
 
 SkipCards.prototype.render = function () {
   console.log('Skip Cards Started')
-  if (game.noOfTurn === 0) {
-    switchPlayer()
-  } else {
-    game.noOfTurn -= 1
-  }
+  checkTurns()
   console.log('Skip Cards Ended, current player is', game.currentPlayer)
 }
 
@@ -104,7 +100,7 @@ DefuseCards.prototype.render = function () {
 AttackCards.prototype.render = function () {
   console.log('Attack Cards Started')
   switchPlayer()
-  game.noOfTurn += 2
+  game.noOfTurn += 1
   console.log('Skip Cards Ended, current player is', game.currentPlayer)
 }
 
@@ -121,7 +117,6 @@ ExplodingKittenCards.prototype.render = function () {
   countDown = setInterval(function () {
     time -= 0.1
     updateTime()
-    console.log(time)
     if (time <= 0) {
       clearInterval(countDown)
       game.isGameOver = true

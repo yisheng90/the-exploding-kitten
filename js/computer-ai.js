@@ -106,6 +106,16 @@ function computerPlayer () {
       currentCards['draw'] -= 200
 
     }
+
+    if (game.player2Moves.length > 1) {
+      if (game.player2Moves[0] === 'see-the-future') {
+        if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] -= 500 * randomness() }
+      }
+
+      if (game.player2Moves[0] === 'shuffle') {
+        if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] -= 500 * randomness() }  
+      }
+    }
   }
 
   var max = ['', -500]

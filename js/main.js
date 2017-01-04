@@ -64,6 +64,7 @@ $(document).ready(function () {
   //select
   $('.select button').click(function () {
     var index = $(this).index()
+    console.log('index',index);
     insertKitten((index-1))
     $('.select').hide()
   })
@@ -156,7 +157,7 @@ function updateNotice () {
     $('.notice h1').text('\'s Turn')
       .prepend('<div class="avatar' + player + '"></div>')
     if (game.noOfTurn !== 0) {
-      $('.notice').append('<h2> x' + game.noOfTurn + ' draw</h2>')
+      $('.notice').append('<h2> x' + (game.noOfTurn +1)+ ' draw</h2>')
     }
   }, 3000)
 
@@ -212,40 +213,6 @@ function updateCards () {
       'bottom': 0
     })
   })
-
-/*
-  $(function () {
-    var index
-    $('.player1Cards div').draggable({revert: true,
-      start: function () {
-        index = $('.player1Cards div').index(this)
-
-        $(this).css({
-          height: $('.played-cards').css('height'),
-          width: $('.played-cards').css('width')
-        })
-      },
-      stop: function () {
-        $(this).css({
-          height: '',
-          width:''
-
-        })
-      }
-    })
-
-    $('.played-cards').droppable({
-      drop: function (event, ui) {
-          if (game.currentPlayer === 1 && game.isGameOver === false) {
-            playTurn((index))
-          } else {
-            alert('It is not your turn!')
-          }
-      }
-    })
-  })
-
-*/
 }
 
 function updateTime () {

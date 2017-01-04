@@ -221,12 +221,15 @@ function checkTurns () {
 
 function insertKitten(index) {
   var temp = game.drawingPile[0]
-  if (index > 0 && index <= 2) {
+  console.log(temp);
+  if (index >= 0 && index <= 2) {
     game.drawingPile.shift()
-    game.drawingpile.splice(index, 0 ,temp)
+    game.drawingPile.splice(index, 0 ,temp)
+
   } else if (index === 3) {
-    game.drawingPile.shift()
+  game.drawingPile.shift()
     game.drawingPile.push(temp)
+
   } else if (index === 4) {
     shuffle()
   }
