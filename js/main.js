@@ -1,27 +1,17 @@
 
-//Main Event Listener
+// Main Event Listener
 $(document).ready(function () {
-
-
-  $('.play button').click(function () {
-    $('.main').hide()
-    $('.game').fadeIn()
-    startGame()
-    updateNotice()
-    updateCards()
-  })
+// ---------------Game Page------------------------
 
   // Player 1 Cards click
   $('.player1Cards').off('click', 'div')
   $('.player1Cards').on('click', 'div', function () {
     var index = $('.player1Cards div').index(this)
     if (game.currentPlayer === 1 && game.isGameOver === false) {
-      playTurn((index))
+      playTurn(index)
     } else {
       alert('It is not your turn!')
     }
-    // updateDisplay()
-    // updateNotice()
   })
 
   // DrawingPile click
@@ -29,10 +19,20 @@ $(document).ready(function () {
   $('.container').on('click', '.drawingPile', function () {
     if (game.currentPlayer === 1) {
       drawCard(0)
-    //  updateDisplay()
-    //  updateNotice()
     }
   })
+
+  // select
+  $('.select button').click(function () {
+    var index = $(this).index()
+    console.log('index', index)
+    insertKitten((index - 1))
+    $('.select').hide()
+  })
+
+  // -------------Game Page End----------------------
+
+  // -------------Game Over Page---------------------
 
   // Restart
   $('#restart').click(function () {
@@ -44,52 +44,51 @@ $(document).ready(function () {
     $('#avatar2').removeAttr('style')
     clearInterval(countDown)
     restart()
-  /*  checkPlayer = setInterval(function () {
-      if (game.currentPlayer === 2) {
-        computerPlayer()
-      }
-    }, 5000) */
   })
 
+  // -------------Game Over End----------------------
+
+  // -----------------Main Page----------------------
   // cardsProperties
   $('.cards div').hover(function () {
     var type = $(this).attr('id')
     $('.cards p').text(cardsProperties[type])
   },
-  function () {
-    $('.cards p').text('')
-  }
-)
+    function () {
+      $('.cards p').text('')
+    }
+  )
 
-  //select
-  $('.select button').click(function () {
-    var index = $(this).index()
-    console.log('index',index);
-    insertKitten((index-1))
-    $('.select').hide()
+  // startGame Button
+  $('.play button').click(function () {
+    $('.main').hide()
+    $('.game').fadeIn()
+    startGame()
+    updateNotice()
+    updateCards()
   })
+
+  // ---------------Main Page End---------------------
 })
+
+
+//----------Helping Function-------------------
 
 // Update Game Interface
 function updateDisplay () {
   if (game.isGameOver === true) {
     $('.gameOver').fadeIn()
 
-    if (whoWon() === 1) {
-      $('#avatar1').css({
+    if (whoWon() !== 0) {
+      $('#avatar'+whoWon()).css({
         'width': '300px',
         'height': '300px'
       })
-    } else if (whoWon() === 2) {
-      $('#avatar2').css({
-        'width': '300px',
-        'height': '300px'
-      })
-    }
+    } 
   }
 
   if (game.playedCards.length > 0) {
-    $('.played-cards').removeAttr('id')
+  //  $('.played-cards').removeAttr('id')
     $('.played-cards').attr('id', game.playedCards[0].type)
   }
 
@@ -100,9 +99,7 @@ function updateDisplay () {
 }
 
 
-
-//Other helping fucntions
-
+//Show Explosive
 var flashKitten
 function showExplosive () {
   if (game.currentPlayer === 1) {
@@ -115,6 +112,8 @@ function showExplosive () {
   }
 }
 
+
+//Hide Explosive
 function hideExplosive () {
   clearInterval(flashKitten)
   if (game.currentPlayer === 1) {
@@ -124,10 +123,9 @@ function hideExplosive () {
   }
 }
 
+
+
 function updateNotice () {
-  var player = game.currentPlayer
-  var lastMove = game['player' + player + 'Moves'][0]
-  var name = ''
 
   $('.notice h1').remove()
   $('.notice h2').remove()
@@ -155,9 +153,9 @@ function updateNotice () {
     $('.notice h3 div').remove()
     $('.notice').append('<h1>')
     $('.notice h1').text('\'s Turn')
-      .prepend('<div class="avatar' + player + '"></div>')
+      .prepend('<div class="avatar' + game.currentPlayer + '"></div>')
     if (game.noOfTurn !== 0) {
-      $('.notice').append('<h2> x' + (game.noOfTurn +1)+ ' draw</h2>')
+      $('.notice').append('<h2> x' + (game.noOfTurn + 1) + ' draw</h2>')
     }
   }, 3000)
 
@@ -165,13 +163,7 @@ function updateNotice () {
 }
 
 function updateCards () {
-  $('.player1Cards').css({
-    'width': (50 * (game.player1Cards.length - 2) + 200) + 'px'
-  })
-
   var align = 0
-  //  alert(game.drawingPile.length)
-
   for (var i = 0; i < game.drawingPile.length; i++) {
   //  alert($('.drawingPile').length)
     $('.relative').append('<div class="drawingPile">')
@@ -180,6 +172,10 @@ function updateCards () {
     })
     align += 2
   }
+
+  $('.player1Cards').css({
+    'width': (50 * (game.player1Cards.length - 2) + 200) + 'px'
+  })
 
   var left = 0
   for (var i = 0; i < game.player1Cards.length; i++) {
@@ -220,34 +216,32 @@ function updateTime () {
 }
 
 function showTopCards () {
-  console.log('showing')
+  console.log('Showing Top Cards')
   var length = 3
   if (game.drawingPile.length < length) {
     length = game.drawingPile.length
   }
-  $('.known-cards div').removeAttr('id')
 
+  $('.known-cards div').removeAttr('id')
   for (var i = 0; i < length; i++) {
-    // if (game.drawingPile[i] !== undefined || game.drawingPile[i] !== null) {
     $('.known-cards div:nth-child(' + (i + 2) + ')').attr('id', game.drawingPile[i].type)
-    // }
   }
 
   $('.known-cards').fadeIn()
-  $('.known-cards').delay(3000).fadeOut()
+  $('.known-cards').delay(2000).fadeOut()
 }
 
 function showYourTurn () {
-  if (game.currentPlayer === 1) {
+  //if (game.currentPlayer === 1) {
     $('.yourTurn').delay(300).fadeIn()
     $('.yourTurn').delay(500).fadeOut()
-  }
+  //}
 }
 
 function showSelect () {
   $('.select').fadeIn()
 }
 
-function playAudio(index) {
+function playAudio (index) {
   $('audio')[index].play()
 }

@@ -7,7 +7,6 @@ var game = {
   currentPlayer: 1,
   noOfPlayers: 1,
   isGameOver: false,
-  whoWon: 0,
   noOfTurn: 0,
   explosionStatus: false,
   knownCards: [],
@@ -15,7 +14,6 @@ var game = {
   player2Moves: [],
   moves: []
 }
-
 
 /*
  *Start the game  by generating cards!
@@ -64,7 +62,6 @@ function startGame () {
   shuffle()
 }
 
-
 /* Shuffle
  * Function: Randomly reshuffle the drawing pile.
  */
@@ -90,27 +87,24 @@ function playTurn (choice) {
   if (game.isGameOver === false) {
     if (game.explosionStatus === true) {
       if (game['player' + game.currentPlayer + 'Cards'][choice].type !== 'defuse') {
-        //clearInterval(checkPlayer)
-        //alert('cannot play this card')
         return
       }
     }
 
     game.playedCards.unshift(game['player' + game.currentPlayer + 'Cards'][choice])
-    game['player'+game.currentPlayer+'Moves'].unshift(game['player' + game.currentPlayer + 'Cards'][choice].type)
+    game['player' + game.currentPlayer + 'Moves'].unshift(game['player' + game.currentPlayer + 'Cards'][choice].type)
     var temp = {}
     temp[game.currentPlayer] = game['player' + game.currentPlayer + 'Cards'][choice].type
     game.moves.unshift(temp)
-    //  console.log('push', game['player' + game.currentPlayer + 'Cards'][choice].type)
     game['player' + game.currentPlayer + 'Cards'].splice(choice, 1)
     game['playedCards'][0].render()
   }
 
-    updateDisplay()
-    updateNotice()
-    console.log('playr1', game.player1Moves);
-    console.log('playr2', game.player2Moves);
-    console.log('moves',game.moves);
+  updateDisplay()
+  updateNotice()
+  console.log('playr1', game.player1Moves)
+  console.log('playr2', game.player2Moves)
+  console.log('moves', game.moves)
 }
 
 /* drawCard
@@ -127,18 +121,12 @@ function drawCard (num) {
     game.drawingPile.splice(num, 1)
 
     if (num === 0) {
-      game['player'+ game.currentPlayer +'Moves'].unshift('draw')
+      game['player' + game.currentPlayer + 'Moves'].unshift('draw')
       var temp = {}
       temp[game.currentPlayer] = 'draw'
       game.moves.unshift(temp)
     }
-
-
-    if (game.noOfTurn < 1) {
-      switchPlayer()
-    } else {
-      game.noOfTurn -= 1
-    }
+    checkTurns()
   }
 
   if (game.knownCards.length > 0 && num === 0) {
@@ -148,9 +136,9 @@ function drawCard (num) {
   isGameOver()
   updateDisplay()
   updateNotice()
-    console.log('playr1', game.player1Moves);
-    console.log('playr2', game.player2Moves);
-    console.log('moves',game.moves);
+  console.log('playr1', game.player1Moves)
+  console.log('playr2', game.player2Moves)
+  console.log('moves', game.moves)
 }
 
 /* isGameOver
@@ -159,17 +147,14 @@ function drawCard (num) {
  */
 
 function isGameOver () {
-  if (game.player1Cards.length === 0 || game.player2Cards.length === 0 ) {
+  if (game.player1Cards.length === 0 || game.player2Cards.length === 0) {
     game.isGameOver = true
-    //updateDisplay()
-  }// else if (game.explosionStatus === true && (game['player'+game.currentPlayer+'Cards'].includes('defuse') !== true)) {
-    //game.isGameOver = true
-  //}
+  }
   whoWon()
 }
 
-function whoWon() {
-  if(game.currentPlayer === 1) {
+function whoWon () {
+  if (game.currentPlayer === 1) {
     return 2
   } else if (game.currentPlayer === 2) {
     return 1
@@ -183,8 +168,8 @@ function switchPlayer () {
     game.currentPlayer = 2
   } else {
     game.currentPlayer = 1
+    showYourTurn()
   }
-  showYourTurn()
 }
 
 function restart () {
@@ -206,8 +191,6 @@ function restart () {
   startGame()
   updateNotice()
   updateDisplay()
-//  console.log(game);
-
 }
 
 function checkTurns () {
@@ -219,17 +202,15 @@ function checkTurns () {
   return true
 }
 
-function insertKitten(index) {
+function insertKitten (index) {
   var temp = game.drawingPile[0]
-  console.log(temp);
+
   if (index >= 0 && index <= 2) {
     game.drawingPile.shift()
-    game.drawingPile.splice(index, 0 ,temp)
-
+    game.drawingPile.splice(index, 0, temp)
   } else if (index === 3) {
-  game.drawingPile.shift()
+    game.drawingPile.shift()
     game.drawingPile.push(temp)
-
   } else if (index === 4) {
     shuffle()
   }

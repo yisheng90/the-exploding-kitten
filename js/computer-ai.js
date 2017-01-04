@@ -8,7 +8,6 @@ checkPlayer = setInterval(function () {
 
 
 function computerPlayer () {
-//  alert('Computer')
   console.log('move', game.player1Moves)
   var currentCards = {}
 
@@ -22,7 +21,6 @@ function computerPlayer () {
     if (Object.keys(currentCards).includes('defuse')) {
       currentCards['defuse'] = 1000
     } else {
-      //clearInterval(checkPlayer)
       clearInterval(countDown)
       clearInterval(flashKitten)
       game.isGameOver = true
@@ -31,6 +29,8 @@ function computerPlayer () {
 
   // Evaluate probabilty when explosion status is not true
   if (game.explosionStatus !== true) {
+    if (Object.keys(currentCards).includes('defuse')) { currentCards['defuse'] -= 500 * randomness() }
+
     if (game.player1Moves[0] === 'skip' || game.player1Moves[0] === 'attack') {
       if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] += 150 * randomness() }
       if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 100 * randomness() }
@@ -113,7 +113,7 @@ function computerPlayer () {
       }
 
       if (game.player2Moves[0] === 'shuffle') {
-        if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] -= 500 * randomness() }  
+        if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] -= 500 * randomness() }
       }
     }
   }
@@ -136,13 +136,8 @@ function computerPlayer () {
       }
     }
   }
-
-  console.log(currentCards)
-
-  //updateDisplay()
-  //updateNotice()
 }
-// console.log(cards[0]);
+
 
 function randomness () {
   var randomValue = Math.random()

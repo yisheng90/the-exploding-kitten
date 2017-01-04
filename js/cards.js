@@ -1,5 +1,6 @@
 // Cards and Cards' Methods
 
+// Cards properties
 var cardsProperties = {
   'kitten': 'Unless you have a DEFUSE CARD, you\'re dead.',
   'attack': 'End your turn(s) without drawing and force the next player to take 2 turns in a row. (If the victim of an ATTACK CARD plays an ATTACK CARD, their turns are immediately over, and the next player must take 2 turns.)',
@@ -9,11 +10,6 @@ var cardsProperties = {
   'see-the-future': 'Peek at the top 3 cards from the Draw Pile.',
   'draw-from-bottom': 'Draw a card from the bottom of Draw Pile.',
   'defuse': 'Save yourself from exploding.'
-}
-
-function Cards () {
-  this.type = 'normal'
-  this.render
 }
 
 function ShuffleCards () {
@@ -61,12 +57,11 @@ ShuffleCards.prototype.render = function () {
 
 SeeTheFutureCards.prototype.render = function () {
   console.log('SeeTheFuture Started')
-  var topThreeCards = game.drawingPile.slice(0, 3)
 
   if (game.currentPlayer === 1) {
     showTopCards()
   } else {
-    game.knownCards = topThreeCards
+    game.knownCards = game.drawingPile.slice(0, 3)
   }
 }
 
@@ -91,16 +86,17 @@ DefuseCards.prototype.render = function () {
       checkTurns()
     }
   }
-
-
-
   console.log('Defuse Cards Ended')
 }
 
 AttackCards.prototype.render = function () {
   console.log('Attack Cards Started')
   switchPlayer()
-  game.noOfTurn += 1
+  if (game.noOfTurn === 0) {
+    game.noOfTurn += 1
+  } else {
+    game.noOfTurn += 2
+  }
   console.log('Skip Cards Ended, current player is', game.currentPlayer)
 }
 
@@ -124,7 +120,6 @@ ExplodingKittenCards.prototype.render = function () {
       whoWon()
       clearInterval(flashKitten)
       hideExplosive()
-      // alert(game.whoWon)
       updateDisplay()
     }
   }, 100)
