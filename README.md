@@ -24,6 +24,10 @@ The player are able to play with the computer AI.
 * Draw From Bottom: Draw a card from the bottom of Draw Pile.
 * Defuse: Save yourself from exploding.
 
+## Deployment
+
+This app is deployed on https://theexplodingkittens.herokuapp.com/
+
 ## Disclaimer
 
 This application is built for programming practice purposes only.
