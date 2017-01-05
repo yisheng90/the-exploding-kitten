@@ -26,7 +26,7 @@ The player are able to play with the computer AI.
 
 ## Deployment
 
-This app is deployed on https://theexplodingkittens.herokuapp.com/
+This app is deployed onhttps://yisheng90.github.io/GA-Project-1-The-Exploding-Kitten-/
 
 ## Disclaimer
 
