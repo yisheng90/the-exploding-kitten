@@ -14,6 +14,7 @@ function computerPlayer () {
     currentCards[game.player[1].cards[i].type] = 0
   }
   currentCards['draw'] = 20
+  console.log(currentCards);
 
   // Use defuse when explosion status is true
   if (game.explosionStatus === true) {
@@ -23,6 +24,7 @@ function computerPlayer () {
       clearInterval(countDown)
       clearInterval(flashKitten)
       game.isGameOver = true
+      this.currentPlayer = 2
     }
   }
 
@@ -125,8 +127,9 @@ function computerPlayer () {
     }
   }
 
+console.log('ai');
   if (max[0] === 'draw') {
-    game.player[1].drawCard(0)
+    moveCards()
   } else {
     for (var i = 0; i < game.player[1].cards.length; i++) {
       if ( game.player[1].cards[i].type === max[0]) {

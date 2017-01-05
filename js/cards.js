@@ -104,15 +104,18 @@ ExplodingKittenCard.prototype.render = function () {
   showExplosive()
 
   time = 10
+  clearInterval(countDown)
   countDown = setInterval(function () {
     time -= 0.1
     updateTime()
-    if (time <= 0) {
-      clearInterval(countDown)
+    console.log(time);
+    if (time < 0) {
       game.isGameOver = true
+      game.currentPlayer = 2
       playAudio(1)
       game.whoWon()
      clearInterval(flashKitten)
+       clearInterval(countDown)
       hideExplosive()
       updateDisplay()
     }

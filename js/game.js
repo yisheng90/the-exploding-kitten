@@ -57,6 +57,7 @@ Game.prototype.shuffle = function () {
 Game.prototype.checkGameOver = function () {
   if (this.player[0].cards.length === 0 || this.player[1].cards.length === 0) {
     this.isGameOver = true
+    this.currentPlayer = 2
   }
   this.whoWon()
 }
@@ -67,14 +68,17 @@ Game.prototype.whoWon = function () {
   } else if (this.currentPlayer === 1) {
     return 0
   }
+
+  this.currentPlayer = 2
 }
 
 Game.prototype.switchPlayer = function () {
   if (this.currentPlayer === 1) {
     this.currentPlayer = 0
+    showYourTurn()
   } else {
     this.currentPlayer = 1
-    // showYourTurn()
+
   }
 }
 
@@ -90,8 +94,8 @@ Game.prototype.restart = function () {
   this.player = []
   console.log('before', game)
   this.startGame()
-  // updateNotice()
-  // updateDisplay()
+   updateNotice()
+   updateDisplay()
   console.log(game)
 }
 

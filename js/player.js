@@ -3,9 +3,7 @@ function Player () {
   this.moves = []
 }
 
-
-Player.prototype.playTurn = function(choice) {
-
+Player.prototype.playTurn = function (choice) {
   if (game.isGameOver === false) {
     if (game.explosionStatus === true) {
       if (this.cards[choice].type !== 'defuse') {
@@ -22,39 +20,39 @@ Player.prototype.playTurn = function(choice) {
     game.playedCards[0].render()
   }
 
-  console.log('player', game.player[0]);
-  console.log('game', game);
+  console.log('player', game.player[0])
+  console.log('game', game)
   updateDisplay()
   updateNotice()
 }
 
 Player.prototype.drawCard = function (num) {
-    console.log('Player', game.currentPlayer, 'drawCard')
+  console.log('Player', game.currentPlayer, 'drawCard')
 
-    if (game.drawingPile[num].type === 'kitten') {
-      game.drawingPile[num].render()
-    } else {
-      this.cards.push(game.drawingPile[num])
-      game.drawingPile.splice(num, 1)
+  if (game.drawingPile[num].type === 'kitten') {
+    game.drawingPile[num].render()
+  } else {
+    this.cards.push(game.drawingPile[num])
+    game.drawingPile.splice(num, 1)
 
-      if (num === 0) {
+    if (num === 0) {
       this.moves.unshift('draw')
-        var temp = {}
-        temp[game.currentPlayer] = 'draw'
-        game.moves.unshift(temp)
-      }
-     game.checkTurns()
+      var temp = {}
+      temp[game.currentPlayer] = 'draw'
+      game.moves.unshift(temp)
     }
+    game.checkTurns()
+  }
 
-    if (game.knownCards.length > 0 && num === 0) {
-      game.knownCards.shift()
-    }
+  if (game.knownCards.length > 0 && num === 0) {
+    game.knownCards.shift()
+  }
 
-    game.checkGameOver()
-    updateDisplay()
-    updateNotice()
-    console.log('playr1', game.player[0].moves)
-    console.log('playr2', game.player[1].moves)
-    console.log('moves', game.moves)
-    console.log('player', game.player[0]);
+  game.checkGameOver()
+  updateDisplay()
+  updateNotice()
+  console.log('playr1', game.player[0].moves)
+  console.log('playr2', game.player[1].moves)
+  console.log('moves', game.moves)
+  console.log('player', game.player[0])
 }
