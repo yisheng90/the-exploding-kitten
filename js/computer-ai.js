@@ -1,18 +1,17 @@
 // Check if it is computer AI's turn every 5 seconds
 var checkPlayer
 checkPlayer = setInterval(function () {
-  if (game.currentPlayer === 2) {
+  if (game.currentPlayer === 1) {
     computerPlayer()
   }
 }, 6000)
 
 
 function computerPlayer () {
-  console.log('move', game.player1Moves)
   var currentCards = {}
 
-  for (var i = 0; i < game.player2Cards.length; i++) {
-    currentCards[game.player2Cards[i].type] = 0
+  for (var i = 0; i < game.player[1].cards.length; i++) {
+    currentCards[game.player[1].cards[i].type] = 0
   }
   currentCards['draw'] = 20
 
@@ -31,7 +30,7 @@ function computerPlayer () {
   if (game.explosionStatus !== true) {
     if (Object.keys(currentCards).includes('defuse')) { currentCards['defuse'] -= 500 * randomness() }
 
-    if (game.player1Moves[0] === 'skip' || game.player1Moves[0] === 'attack') {
+    if (game.player[0].moves[0] === 'skip' || game.player[0].moves[0] === 'attack') {
       if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] += 150 * randomness() }
       if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 100 * randomness() }
       if (Object.keys(currentCards).includes('draw-from-bottom')) { currentCards['draw-from-bottom'] += 100 * randomness() }
@@ -40,8 +39,8 @@ function computerPlayer () {
       currentCards['draw'] += 80 * randomness()
     }
 
-    if (game.player1Moves.length > 1) {
-      if (game.player1Moves[1] === 'see-the-future' && (game.player1Moves[0] === 'skip' || game.player1Moves[0] === 'attack' || game.player1Moves[0] === 'draw-from-bottom')) {
+    if (game.player[0].moves.length > 1) {
+      if (game.player[0].moves[1] === 'see-the-future' && (game.player[0].moves[0] === 'skip' || game.player[0].moves[0] === 'attack' || game.player[0].moves[0] === 'draw-from-bottom')) {
         if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 200 * randomness() }
         if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] += 50 * randomness() }
         if (Object.keys(currentCards).includes('skip')) { currentCards['skip'] += 200 * randomness() }
@@ -50,20 +49,20 @@ function computerPlayer () {
       }
     }
 
-    if (game.player1Moves[0] === 'defuse') {
+    if (game.player[0].moves[0] === 'defuse') {
       if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] += 100 * randomness() }
       if (Object.keys(currentCards).includes('draw-from-bottom')) { currentCards['draw-from-bottom'] += 80 * randomness() }
       if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 100 * randomness() }
       currentCards['draw'] += 80 * randomness()
     }
 
-    if (game.player1Moves[0] === 'draw') {
+    if (game.player[0].moves[0] === 'draw') {
       currentCards['draw'] += 50 * randomness()
       if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] += 100 * randomness() }
       if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] += 100 * randomness() }
     }
 
-    if (game.player1Moves[0] === 'shuffle') {
+    if (game.player[0].moves[0] === 'shuffle') {
       currentCards['draw'] += 1000
       if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] -= 500 * randomness() }
     }
@@ -80,7 +79,7 @@ function computerPlayer () {
       if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] -= 100 * randomness() }
 
       if (game.knownCards[0].type === 'kitten') {
-        if (game.player1Moves.includes('defuse')) {
+        if (game.player[0].moves[0].includes('defuse')) {
           if (Object.keys(currentCards).includes('skip')) { currentCards['skip'] += 200 * randomness() }
           if (Object.keys(currentCards).includes('attack')) { currentCards['attack'] += 200 * randomness() }
         } else {
@@ -93,7 +92,7 @@ function computerPlayer () {
         currentCards['draw'] -= 200
       }
 
-      if (game.player1Cards.length < 4) {
+      if (game.player[0].cards.length < 4) {
         if (Object.keys(currentCards).includes('favor')) { currentCards['favor'] += 200 * randomness() }
       }
 
@@ -107,12 +106,12 @@ function computerPlayer () {
 
     }
 
-    if (game.player2Moves.length > 1) {
-      if (game.player2Moves[0] === 'see-the-future') {
+    if (game.player[1].moves.length > 1) {
+      if (game.player[1].moves[0] === 'see-the-future') {
         if (Object.keys(currentCards).includes('see-the-future')) { currentCards['see-the-future'] -= 500 * randomness() }
       }
 
-      if (game.player2Moves[0] === 'shuffle') {
+      if (game.player[1].moves[0] === 'shuffle') {
         if (Object.keys(currentCards).includes('shuffle')) { currentCards['shuffle'] -= 500 * randomness() }
       }
     }
@@ -127,11 +126,11 @@ function computerPlayer () {
   }
 
   if (max[0] === 'draw') {
-    drawCard(0)
+    game.player[1].drawCard(0)
   } else {
-    for (var i = 0; i < game.player2Cards.length; i++) {
-      if (game.player2Cards[i].type === max[0]) {
-        playTurn(i)
+    for (var i = 0; i < game.player[1].cards.length; i++) {
+      if ( game.player[1].cards[i].type === max[0]) {
+        game.player[1].playTurn(i)
         break
       }
     }

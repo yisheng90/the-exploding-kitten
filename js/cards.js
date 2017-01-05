@@ -12,66 +12,60 @@ var cardsProperties = {
   'defuse': 'Save yourself from exploding.'
 }
 
-function ShuffleCards () {
+function ShuffleCard () {
   this.type = 'shuffle'
-  this.render
 }
 
-function ExplodingKittenCards () {
+function ExplodingKittenCard () {
   this.type = 'kitten'
-  this.render
 }
 
-function DefuseCards () {
+function DefuseCard () {
   this.type = 'defuse'
-  this.render
 }
 
-function SkipCards () {
+function SkipCard () {
   this.type = 'skip'
-  this.render
 }
 
-function AttackCards () {
+function AttackCard () {
   this.type = 'attack'
-  this.render
 }
 
-function SeeTheFutureCards () {
+function SeeTheFutureCard () {
   this.type = 'see-the-future'
-  this.render
 }
 
-function DrawFromBottomCards () {
+function DrawFromBottomCard () {
   this.type = 'draw-from-bottom'
 }
 
-function FavorCards () {
+function FavorCard () {
   this.type = 'favor'
 }
 
 // Cards Methods
-ShuffleCards.prototype.render = function () {
-  shuffle()
+ShuffleCard.prototype.render = function () {
+  game.shuffle()
 }
 
-SeeTheFutureCards.prototype.render = function () {
+SeeTheFutureCard.prototype.render = function () {
   console.log('SeeTheFuture Started')
 
-  if (game.currentPlayer === 1) {
+  if (game.currentPlayer === 0) {
     showTopCards()
   } else {
     game.knownCards = game.drawingPile.slice(0, 3)
   }
 }
 
-SkipCards.prototype.render = function () {
+SkipCard.prototype.render = function () {
   console.log('Skip Cards Started')
-  checkTurns()
+  game.checkTurns()
   console.log('Skip Cards Ended, current player is', game.currentPlayer)
 }
 
-DefuseCards.prototype.render = function () {
+DefuseCard.prototype.render = function () {
   console.log('Defuse Cards Started')
 
   clearInterval(countDown)
@@ -79,30 +73,30 @@ DefuseCards.prototype.render = function () {
   hideExplosive()
 
   if (game.drawingPile[0].type === 'kitten') {
-    if (game.currentPlayer === 1) {
+    if (game.currentPlayer === 0) {
       showSelect()
     } else {
-      shuffle()
-      checkTurns()
+      game.shuffle()
+      game.checkTurns()
     }
   }
   console.log('Defuse Cards Ended')
 }
 
-AttackCards.prototype.render = function () {
+AttackCard.prototype.render = function () {
   console.log('Attack Cards Started')
-  switchPlayer()
+  game.switchPlayer()
   if (game.noOfTurn === 0) {
     game.noOfTurn += 1
   } else {
     game.noOfTurn += 2
   }
-  console.log('Skip Cards Ended, current player is', game.currentPlayer)
+  console.log('Attack Cards Ended, current player is', game.currentPlayer)
 }
 
 var countDown
 var time
-ExplodingKittenCards.prototype.render = function () {
+ExplodingKittenCard.prototype.render = function () {
   console.log('Exploding Started')
 
   game.explosionStatus = true
@@ -117,8 +111,8 @@ ExplodingKittenCards.prototype.render = function () {
       clearInterval(countDown)
       game.isGameOver = true
       playAudio(1)
-      whoWon()
-      clearInterval(flashKitten)
+      game.whoWon()
+     clearInterval(flashKitten)
       hideExplosive()
       updateDisplay()
     }
@@ -127,17 +121,18 @@ ExplodingKittenCards.prototype.render = function () {
   console.log('Explosing Ended')
 }
 
-DrawFromBottomCards.prototype.render = function () {
+DrawFromBottomCard.prototype.render = function () {
+  console.log('draw', this)
   console.log('Draw From Bottom Started')
-  drawCard(game.drawingPile.length - 1)
+  game.player[game.currentPlayer].drawCard(game.drawingPile.length - 1)
   console.log('Draw From Bottom  Ended')
 }
 
-FavorCards.prototype.render = function () {
+FavorCard.prototype.render = function () {
   console.log('Favor Cards Started')
-  var num = Math.floor((Math.random()) * game['player' + (3 - game.currentPlayer) + 'Cards'].length)
+  var num = Math.floor((Math.random()) * game.player[1 - game.currentPlayer].cards.length)
 
-  game['player' + (game.currentPlayer) + 'Cards'].push(game['player' + (3 - game.currentPlayer) + 'Cards'][num])
-  game['player' + (3 - game.currentPlayer) + 'Cards'].splice(num, 1)
+  game.player[game.currentPlayer].cards.push(game.player[1 - game.currentPlayer].cards[num])
+  game.player[1 - game.currentPlayer].cards.splice(num, 1)
   console.log('Ended Started')
 }

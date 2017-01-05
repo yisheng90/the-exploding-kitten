@@ -1,14 +1,16 @@
-
+  var game = new Game()
 // Main Event Listener
+
 $(document).ready(function () {
+
 // ---------------Game Page------------------------
 
   // Player 1 Cards click
   $('.player1Cards').off('click', 'div')
   $('.player1Cards').on('click', 'div', function () {
     var index = $('.player1Cards div').index(this)
-    if (game.currentPlayer === 1 && game.isGameOver === false) {
-      playTurn(index)
+    if (game.currentPlayer === 0 && game.isGameOver === false) {
+        game.player[game.currentPlayer].playTurn(index)
     } else {
       alert('It is not your turn!')
     }
@@ -17,8 +19,8 @@ $(document).ready(function () {
   // DrawingPile click
   $('.container').off('click', '.drawingPile')
   $('.container').on('click', '.drawingPile', function () {
-    if (game.currentPlayer === 1) {
-      drawCard(0)
+    if (game.currentPlayer === 0) {
+      game.player[game.currentPlayer].drawCard(0)
     }
   })
 
@@ -26,7 +28,7 @@ $(document).ready(function () {
   $('.select button').click(function () {
     var index = $(this).index()
     console.log('index', index)
-    insertKitten((index - 1))
+    game.insertKitten((index - 1))
     $('.select').hide()
   })
 
@@ -43,7 +45,7 @@ $(document).ready(function () {
     $('#avatar1').removeAttr('style')
     $('#avatar2').removeAttr('style')
     clearInterval(countDown)
-    restart()
+    game.restart()
   })
 
   // -------------Game Over End----------------------
@@ -63,7 +65,7 @@ $(document).ready(function () {
   $('.play button').click(function () {
     $('.main').hide()
     $('.game').fadeIn()
-    startGame()
+    game.startGame()
     updateNotice()
     updateCards()
   })
@@ -79,12 +81,12 @@ function updateDisplay () {
   if (game.isGameOver === true) {
     $('.gameOver').fadeIn()
 
-    if (whoWon() !== 0) {
-      $('#avatar'+whoWon()).css({
+    if (game.whoWon() !== 0) {
+      $('#avatar'+game.whoWon()).css({
         'width': '300px',
         'height': '300px'
       })
-    } 
+    }
   }
 
   if (game.playedCards.length > 0) {
@@ -102,7 +104,7 @@ function updateDisplay () {
 //Show Explosive
 var flashKitten
 function showExplosive () {
-  if (game.currentPlayer === 1) {
+  if (game.currentPlayer === 0) {
     $('.explosive').fadeIn()
   } else {
     flashKitten = setInterval(function () {
@@ -116,7 +118,7 @@ function showExplosive () {
 //Hide Explosive
 function hideExplosive () {
   clearInterval(flashKitten)
-  if (game.currentPlayer === 1) {
+  if (game.currentPlayer === 0) {
     $('.explosive').hide()
   } else {
     $('.player2Explosive').fadeOut()
@@ -137,8 +139,8 @@ function updateNotice () {
     } else if (Object.values(game.moves[0])[0] === 'favor') {
       $('.notice h3').text(' got ')
         .prepend('<div class="avatar' + Object.keys(game.moves[0])[0] + '"></div>')
-        .append('<div  class="small-card" id="' + game['player' + Object.keys(game.moves[0])[0] + 'Cards'][game['player' + Object.keys(game.moves[0])[0] + 'Cards'].length - 1].type + '"></div> from')
-        .append('<div class="avatar' + (3 - Object.keys(game.moves[0])[0]) + '"></div>')
+        .append('<div  class="small-card" id="' + game.player[Object.keys(game.moves[0])[0]].cards[game.player[Object.keys(game.moves[0])[0]].cards.length - 1].type + '"></div> from')
+        .append('<div class="avatar' + (1 - Object.keys(game.moves[0])[0]) + '"></div>')
     } else {
       $('.notice h3').text(' played ')
       .prepend('<div class="avatar' + Object.keys(game.moves[0])[0] + '"></div>')
@@ -174,21 +176,21 @@ function updateCards () {
   }
 
   $('.player1Cards').css({
-    'width': (50 * (game.player1Cards.length - 2) + 200) + 'px'
+    'width': (50 * (  game.player[0].cards.length - 2) + 200) + 'px'
   })
 
   var left = 0
-  for (var i = 0; i < game.player1Cards.length; i++) {
+  for (var i = 0; i < game.player[0].cards.length; i++) {
     $('.player1Cards').append('<div></div>')
 
     $('.player1Cards div:nth-child(' + (i + 1) + ')').css({
       'left': left + 'px'
     })
-    .attr('id', game.player1Cards[i].type)
+    .attr('id', game.player[0].cards[i].type)
     left += 50
   }
 
-  for (var i = 0; i < game.player2Cards.length; i++) {
+  for (var i = 0; i < game.player[1].cards.length; i++) {
     $('.player2').prepend('<button></button>')
   }
 
