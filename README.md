@@ -14,10 +14,6 @@ The player are able to play with the computer AI.
 
 #### Rules
 
-## How to Play
-
-### Rules
-
 
 1.Play a card from your hand by placing it FACE UP on top of the Discard Pile, and following the instructions on the card. Or play no cards at all; that's cool too.
 
@@ -27,8 +23,6 @@ The player are able to play with the computer AI.
 
 
 #### Cards type
-
-### Cards type
 
 
 * Exploding Kitten: Unless you have a DEFUSE CARD, you're dead.
@@ -59,12 +53,6 @@ This app is deployed on https://yisheng90.github.io/GA-Project-1-The-Exploding-K
 * **Lee Yi Sheng** - *Responsible for keeping vests white* - [yisheng90](https://github.com/yisheng90)
 
 ## Acknowledgments
-
-## Deployment
-
-This app is deployed on https://yisheng90.github.io/GA-Project-1-The-Exploding-Kitten-/
-
-## Disclaimer
 
 This application is built for programming practice purposes only.
 This is not an official "Exploding Kittens" application. if you love the game, please visit  http://www.explodingkittens.com/ for more informations.
