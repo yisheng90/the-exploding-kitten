@@ -85,7 +85,7 @@
 
   // Restart
     $('#restart').click(function () {
-      $('.player1Explosive').remove()
+
       $('.gameOver').hide()
       $('.explosive').hide()
       $('.dechargePile').removeAttr('id')
@@ -125,6 +125,7 @@
 // Update Game Interface
   function updateDisplay () {
     if (game.isGameOver === true) {
+      $('.player1Explosive').remove()
       $('.gameOver').fadeIn()
       console.log('winner',game.whoWon());
       $('#avatar' + game.whoWon()).css({
