@@ -4,12 +4,46 @@
   $(document).ready(function () {
 // ---------------Game Page------------------------
 
+    $('.player2').off('click', 'button')
+    $('.player2').on('click', 'button', function () {
+      console.log('button', $(this).position().top)
+      console.log('button', $(this).position().left)
+    })
+
   // Player 1 Cards click
     $('.player1Cards').off('click', 'div')
     $('.player1Cards').on('click', 'div', function () {
       var index = $('.player1Cards div').index(this)
+      var positiony = $(this).position().top
+      var positionx = $(this).position().left
+      var desy = ($('.played-cards').position().top + 200) / 10
+      var desx = ($('.played-cards').position().left + parseInt($('.played-cards').css('height')) - $('.player1Cards').position().left - positionx) / 10
+
       if (game.currentPlayer === 0 && game.isGameOver === false) {
-        game.player[game.currentPlayer].playTurn(index)
+        clearInterval(moveInterval)
+        var moveInterval = setInterval(function () {
+          if (desx <= 35 || desx <= -35) {
+            positiony -= desy
+          } else {
+            positiony -= desy
+            positionx += desx
+          }
+          $(this).css({
+            height: 240,
+            width: 180,
+            top: positiony,
+            left: positionx
+          })
+
+          if (positiony <= -desy * 10) {
+            clearInterval(moveInterval)
+            if (game.currentPlayer === 0) {
+              game.player[game.currentPlayer].playTurn(index)
+            }
+          }
+        }.bind(this), 1000/30)
+
+        //
       } else {
         alert('It is not your turn!')
       }
@@ -120,6 +154,7 @@
     if (game.currentPlayer === 0) {
       $('.explosive').fadeIn()
     } else {
+      clearInterval(flashKitten)
       flashKitten = setInterval(function () {
         $('.player2Explosive').fadeIn()
       .fadeOut()
@@ -257,7 +292,7 @@
     $('audio')[index].play()
   }
 
-  function moveCards () {
+  function player2Draw () {
     var positiony = $('.drawingPile:last-child').position().top
     var positionx = $('.drawingPile:last-child').position().left
     clearInterval(moveInterval)

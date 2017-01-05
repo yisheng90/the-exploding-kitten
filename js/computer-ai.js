@@ -129,11 +129,11 @@ function computerPlayer () {
 
 console.log('ai');
   if (max[0] === 'draw') {
-    moveCards()
+    player2Draw()
   } else {
     for (var i = 0; i < game.player[1].cards.length; i++) {
       if ( game.player[1].cards[i].type === max[0]) {
-        game.player[1].playTurn(i)
+        game.player[game.currentPlayer].playTurn(i)
         break
       }
     }
