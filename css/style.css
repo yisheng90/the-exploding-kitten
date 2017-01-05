@@ -15,8 +15,8 @@
 
 
 body {
-  height: 100%;
-  width:100%;
+  height: 100vh;
+  width:100vw;
   background: url('../img/background.jpg');
   background-size: cover;
   background-repeat: repeat-y;
@@ -37,7 +37,6 @@ body {
 .main div {
   display: flex;
   width: 100%;
-
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
@@ -85,7 +84,7 @@ body {
 }
 
 .how-to-play ol {
-  height: 80%;
+  height: 60%;
 }
 
 .play button {
@@ -120,7 +119,7 @@ body {
 }
 
 /*---------Player's Cards Style---------*/
-.player1 {
+.player0 {
   position:absolute;
   bottom:110px;;
   display:flex;
@@ -130,7 +129,7 @@ body {
   height:0;
 }
 
-.player1Cards {
+.player0Cards {
   padding: 0;
   position: relative;
   display: flex;
@@ -139,7 +138,7 @@ body {
   justify-content: flex-end;
 }
 
-.player1Cards div {
+.player0Cards div {
   height: 150px;
   width: 180px;
   position: absolute;
@@ -152,7 +151,7 @@ body {
   height: 200px;
 }
 
-.player2 {
+.player1 {
   display:inline-flex;
   text-align: center;
   width:60%;
@@ -160,7 +159,7 @@ body {
   align-items: flex-start;
 }
 
-.player2 button {
+.player1Cards {
   background: url('../img/card-cover.png');
   background-size: cover;
   background-repeat: no-repeat;
@@ -170,7 +169,7 @@ body {
 
 }
 
-.player2 div {
+.player1 div {
   display: inline-block;
 }
 
@@ -185,7 +184,7 @@ body {
 
 }
 
-.flex-first {
+.flexFirst {
   display:flex;
   align-items: center;
   width: 40%;
@@ -202,7 +201,7 @@ body {
   position: absolute;
 }
 
-.played-cards {
+.dechargePile {
   height: 240px;
   width: 180px;
   border-radius: 20px;
@@ -232,8 +231,11 @@ button {
   color: white;
 }
 
+.explosive-meter h1 {
+  height: 2px;
+}
+
 .notice {
-  /*position: absolute;*/
   display: flex;
   align-content:flex-start;
   justify-content: center;
@@ -296,7 +298,7 @@ button {
   color: yellow;
 }
 
-.explosive-kitten {
+.cardBox {
   display: inline-flex;
   width: 150px;
   height: 200px;
@@ -305,7 +307,7 @@ button {
   justify-content: center;
 }
 
-.player2Explosive {
+.player1Explosive {
   display:none;
   position: absolute;
   top: 0;
@@ -329,13 +331,13 @@ button {
 /*----GameOver----*/
 .gameOver{
   position: absolute;
-  display:none;
+  display: none;
   top: 0;
   left: 10%;
   width: 80%;
   height: 90%;
   background: rgba(128,0,0,0.9);
-  border: 4px solid rgba(255,223,0,0.9);
+  border: 4px solid rgba(255,223,0,0.7);
   text-align: center;
   font-size: 60px;
 }
@@ -366,13 +368,13 @@ button {
   margin: 20px;
 }
 
-.avatar2 {
+.avatar1 {
 background: url('../img/avatar2.png');
 background-size: cover;
 margin-top: 0;
 }
 
-.avatar1 {
+.avatar0 {
 background: url('../img/avatar1.png');
 background-size: cover;
 margin-bottom: 0;
@@ -421,25 +423,27 @@ margin-bottom: 0;
   background-size: cover;
 }
 
-#place-your-defuse {
+#placeYourDefuse {
   border: 2px white dashed;
   background: url('../img/place-your-defuse.png');
   background-size: cover;
   opacity: 0.8;
 }
 
-#avatar1 {
+#avatar0 {
   background: url('../img/avatar1.png');
-  background-size: cover;
-  width: 200px;
-  height: 200px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 25%;
+  height: 50%;
 }
 
-#avatar2 {
+#avatar1 {
   background: url('../img/avatar2.png');
-  background-size: cover;
-  width: 200px;
-  height: 200px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  width: 25%;
+  height: 50%;
 }
 
 
@@ -488,8 +492,8 @@ margin-bottom: 0;
 
 }
 
-/*-----known-cards-----*/
-.known-cards {
+/*-----seeTheFutureBoard-----*/
+.seeTheFutureBoard {
   position: absolute;
   top: 25%;
   left: 25%;
@@ -502,16 +506,16 @@ margin-bottom: 0;
   display: none;
 }
 
-.known-cards h1 {
+.seeTheFutureBoard h1 {
   color: white;
     text-shadow: 0 0 1px #000;
 }
 
-.known-cards span {
+.seeTheFutureBoard span {
   color: rgb(75,0,130);
 }
 
-.known-cards div {
+.seeTheFutureBoard div {
   border: 2px black dashed;
 }
 
@@ -535,9 +539,10 @@ margin-bottom: 0;
     height: 200px;
   }
 
-  .player2Explosive,
-  .explosive-kitten,
-  .played-cards,
+.notice,
+  .player1Explosive,
+  .cardBox,
+  .dechargePile,
   .drawingPile {
     height: 200px;
     width: 150px;
@@ -557,20 +562,22 @@ margin-bottom: 0;
     font-size: 25px;
   }
 
-  .player1Cards div {
+  .player0Cards div {
     height: 100px;
   }
 
-  .notice {
-    width: 150px;
-  }
-
   .notice h1 {
-    font-size: 20px;
+    font-size: 15px;
   }
 
   .notice h2 {
-    font-size: 15px;
+    font-size: 10px;
+  }
+
+  .notice img {
+    object-fit: fill;
+    width:10px;
+    height: 15px;
   }
 
 
@@ -582,15 +589,15 @@ margin-bottom: 0;
     height: 200px;
   }
 
-
-  .played-cards,
+.notice ,
+  .dechargePile,
   .drawingPile {
     height: 120px;
     width: 90px;
   }
 
-  .player2Explosive,
-.explosive-kitten {
+  .player1Explosive,
+.cardBox {
   height: 80px;
   width: 50px;
 }
@@ -608,16 +615,16 @@ margin-bottom: 0;
     font-size: 15px;
   }
 
-  .player1 {
+  .player0 {
     bottom: 50px;;
   }
 
-  .player1Cards div {
+  .player0Cards div {
     height: 80px;
     width: 100px;
   }
 
-  .player2 button {
+  .player1Cards {
     height: 40px;
     width: 30px;
   }
@@ -632,6 +639,11 @@ margin-bottom: 0;
 
   .notice h2 {
     font-size: 10px;
+  }
+  .notice img {
+    object-fit: fill;
+    width:10px;
+    height: 15px;
   }
 
   .avatar {
@@ -652,13 +664,14 @@ margin-bottom: 0;
 
 }
 
-@media only screen and (max-width: 700px) and (orientation: landscape) {
+@media only screen and (max-width: 750px) and (orientation: landscape) {
 
   .logo {
     width: 20%;
     height: 10%;
     background-size: contain;
   }
+
 }
 
 @media only screen and (max-width: 1200px) and (orientation: portrait) {
@@ -673,7 +686,7 @@ margin-bottom: 0;
     opacity: 0.8;
   }
 
-  .player2 {
+  .player1 {
     width: 100%;
     margin-top: 50px;
   }
@@ -682,7 +695,7 @@ margin-bottom: 0;
     width: 100%;
 
   }
-  .flex-first {
+  .flexFirst {
     width: 50%;
 
   }
@@ -696,7 +709,7 @@ margin-bottom: 0;
     background: rgba(0,0,0,0.8)
   }
 
-  .played-cards {
+  .dechargePile {
 
   }
 

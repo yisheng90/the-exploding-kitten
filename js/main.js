@@ -4,20 +4,15 @@
   $(document).ready(function () {
 // ---------------Game Page------------------------
 
-    $('.player2').off('click', 'button')
-    $('.player2').on('click', 'button', function () {
-      console.log('button', $(this).position().top)
-      console.log('button', $(this).position().left)
-    })
-
   // Player 1 Cards click
-    $('.player1Cards').off('click', 'div')
-    $('.player1Cards').on('click', 'div', function () {
-      var index = $('.player1Cards div').index(this)
+    $('.player0Cards').off('click', 'div')
+    $('.player0Cards').on('click', 'div', function () {
+      $('.seeTheFutureBoard').hide()
+      var index = $('.player0Cards div').index(this)
       var positiony = $(this).position().top
       var positionx = $(this).position().left
-      var desy = ($('.played-cards').position().top + 200) / 10
-      var desx = ($('.played-cards').position().left + parseInt($('.played-cards').css('height')) - $('.player1Cards').position().left - positionx) / 10
+      var desy = ($('.dechargePile').position().top + 200) / 10
+      var desx = ($('.dechargePile').position().left + parseInt($('.dechargePile').css('height')) - $('.player0Cards').position().left - positionx) / 10
 
       if (game.currentPlayer === 0 && game.isGameOver === false) {
         clearInterval(moveInterval)
@@ -41,7 +36,7 @@
               game.player[game.currentPlayer].playTurn(index)
             }
           }
-        }.bind(this), 1000/30)
+        }.bind(this), 1000 / 30)
 
         //
       } else {
@@ -52,6 +47,7 @@
   // DrawingPile click
     $('.container').off('click', '.drawingPile')
     $('.container').on('click', '.drawingPile', function () {
+      $('.seeTheFutureBoard').hide()
       if (game.currentPlayer === 0) {
         var positiony = $('.drawingPile:last-child').position().top
         var positionx = $('.drawingPile:last-child').position().left
@@ -89,12 +85,12 @@
 
   // Restart
     $('#restart').click(function () {
-      clearInterval(flashKitten)
+      $('.player1Explosive').remove()
       $('.gameOver').hide()
       $('.explosive').hide()
-      $('.played-cards').removeAttr('id')
+      $('.dechargePile').removeAttr('id')
+      $('#avatar0').removeAttr('style')
       $('#avatar1').removeAttr('style')
-      $('#avatar2').removeAttr('style')
       clearInterval(countDown)
       game.restart()
     })
@@ -130,21 +126,19 @@
   function updateDisplay () {
     if (game.isGameOver === true) {
       $('.gameOver').fadeIn()
-
-      if (game.whoWon() <= 3) {
-        $('#avatar' + game.whoWon()).css({
-          'border': '5px solid yellow '
-        })
-      }
+      console.log('winner',game.whoWon());
+      $('#avatar' + game.whoWon()).css({
+        'border': '5px solid yellow '
+      })
     }
 
     if (game.playedCards.length > 0) {
-      $('.played-cards').attr('id', game.playedCards[0].type)
+      $('.dechargePile').attr('id', game.playedCards[0].type)
     }
 
     $('.drawingPile').remove()
-    $('.player1Cards div').remove()
-    $('.player2 button').remove()
+    $('.player0Cards div').remove()
+    $('.player1Cards').remove()
     updateCards()
   }
 
@@ -154,10 +148,18 @@
     if (game.currentPlayer === 0) {
       $('.explosive').fadeIn()
     } else {
+      $('body').append('<div class="player1Explosive"></div>')
+      var flashTime = 10
       clearInterval(flashKitten)
       flashKitten = setInterval(function () {
-        $('.player2Explosive').fadeIn()
+        flashTime -= 0.1
+        $('.player1Explosive').fadeIn()
       .fadeOut()
+
+        if (flashTime < 0) {
+          clearInterval(flashKitten)
+          $('.player1Explosive').remove()
+        }
       }, 500)
     }
   }
@@ -168,7 +170,7 @@
     if (game.currentPlayer === 0) {
       $('.explosive').hide()
     } else {
-      $('.player2Explosive').fadeOut()
+      $('.player1Explosive').remove()
     }
   }
 
@@ -219,15 +221,15 @@
       align += 2
     }
 
-    $('.player1Cards').css({
+    $('.player0Cards').css({
       'width': (50 * (game.player[0].cards.length - 2) + 200) + 'px'
     })
 
     var left = 0
     for (var i = 0; i < game.player[0].cards.length; i++) {
-      $('.player1Cards').append('<div></div>')
+      $('.player0Cards').append('<div></div>')
 
-      $('.player1Cards div:nth-child(' + (i + 1) + ')').css({
+      $('.player0Cards div:nth-child(' + (i + 1) + ')').css({
         'left': left + 'px'
       })
     .attr('id', game.player[0].cards[i].type)
@@ -235,22 +237,22 @@
     }
 
     for (var i = 0; i < game.player[1].cards.length; i++) {
-      $('.player2').prepend('<button></button>')
+      $('.player1').prepend('<div class="player1Cards"></div>')
     }
 
   // Player 1 hover
 
-    $('.player1Cards div').hover(function () {
-      var index = $('.player1Cards div').index(this) + 1
-      var height = $('.player1Cards div:nth-child(' + index + ')').css('height')
-      $('.player1Cards div:nth-child(' + index + ')').css({
+    $('.player0Cards div').hover(function () {
+      var index = $('.player0Cards div').index(this) + 1
+      var height = $('.player0Cards div:nth-child(' + index + ')').css('height')
+      $('.player0Cards div:nth-child(' + index + ')').css({
         'height': parseInt(height) + 50 + 'px'
       })
     },
   function () {
-    var index = $('.player1Cards div').index(this) + 1
-    var height = $('.player1Cards div:nth-child(' + index + ')').css('height')
-    $('.player1Cards div:nth-child(' + index + ')').css({
+    var index = $('.player0Cards div').index(this) + 1
+    var height = $('.player0Cards div:nth-child(' + index + ')').css('height')
+    $('.player0Cards div:nth-child(' + index + ')').css({
       'height': (parseInt(height) - 50) + 'px',
       'bottom': 0
     })
@@ -268,13 +270,13 @@
       length = game.drawingPile.length
     }
 
-    $('.known-cards div').removeAttr('id')
+    $('.seeTheFutureBoard div').removeAttr('id')
     for (var i = 0; i < length; i++) {
-      $('.known-cards div:nth-child(' + (i + 2) + ')').attr('id', game.drawingPile[i].type)
+      $('.seeTheFutureBoard div:nth-child(' + (i + 2) + ')').attr('id', game.drawingPile[i].type)
     }
 
-    $('.known-cards').fadeIn()
-    $('.known-cards').delay(2000).fadeOut()
+    $('.seeTheFutureBoard').fadeIn()
+    $('.seeTheFutureBoard').delay(2000).fadeOut()
   }
 
   function showYourTurn () {
@@ -292,7 +294,7 @@
     $('audio')[index].play()
   }
 
-  function player2Draw () {
+  function player1Draw () {
     var positiony = $('.drawingPile:last-child').position().top
     var positionx = $('.drawingPile:last-child').position().left
     clearInterval(moveInterval)

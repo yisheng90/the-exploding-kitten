@@ -31,6 +31,7 @@ Player.prototype.drawCard = function (num) {
 
   if (game.drawingPile[num].type === 'kitten') {
     game.drawingPile[num].render()
+    game.checkGameOver()
   } else {
     this.cards.push(game.drawingPile[num])
     game.drawingPile.splice(num, 1)
@@ -48,11 +49,6 @@ Player.prototype.drawCard = function (num) {
     game.knownCards.shift()
   }
 
-  game.checkGameOver()
   updateDisplay()
   updateNotice()
-  console.log('playr1', game.player[0].moves)
-  console.log('playr2', game.player[1].moves)
-  console.log('moves', game.moves)
-  console.log('player', game.player[0])
 }

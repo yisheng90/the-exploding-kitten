@@ -12,8 +12,10 @@
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
 
+
     <script src="./js/cards.js"></script>
-    <script src='./js/game-logic.js'></script>
+    <script src="./js/player.js"></script>
+    <script src='./js/game.js'></script>
     <script src='./js/computer-ai.js'></script>
     <script src="./js/main.js"></script>
   </head>
@@ -82,10 +84,10 @@
 
   <div class='game'>
   <img src="./img/mainlogo.png" class="logo">
-  <div class="player2"><div class="avatar avatar2"></div></div>
+  <div class="player1"><div class="avatar avatar1"></div></div>
 
   <div class='container'>
-    <div class='flex-first'>
+    <div class='flexFirst'>
       <div class="explosive-meter">
         <h1></h1>
       </div>
@@ -96,45 +98,42 @@
 
 
 
-    <div class="played-cards dotted-border">
+    <div class="dechargePile dotted-border">
     </div>
 
     <div class="notice">
-      <div class='pin'><img src='./img/pin.png'></div>
       <h3></h3>
     </div>
   </div>
 
-    <div class="player1">
-      <div class="avatar avatar1"></div>
-      <div class="player1Cards"></div>
+    <div class="player0">
+      <div class="avatar avatar0"></div>
+      <div class="player0Cards"></div>
     </div>
 
     <div class="explosive">
       <h1>The Exploding <span>Kitten</span></h1>
-      <div id='kitten' class='explosive-kitten'></div>
-      <div id='time' class='explosive-kitten'></div>
-      <div id='place-your-defuse' class='explosive-kitten'></div>
+      <div id='kitten' class='cardBox'></div>
+      <div id='time' class='cardBox'></div>
+      <div id='placeYourDefuse' class='cardBox'></div>
     </div>
 
-    <div class="player2Explosive">
-    </div>
 
     <div class="gameOver">
       <h1>Game <span>Over</span></h1>
-      <div id='avatar1' class='explosive-kitten'></div>
-      <div id='avatar2' class='explosive-kitten'></div>
+      <div id='avatar0' class='cardBox'></div>
+      <div id='avatar1' class='cardBox'></div>
       <button id='restart'> Play Again!!!</button>
     </div>
 
     <div class='yourTurn'>
     </div>
 
-    <div class="known-cards">
+    <div class="seeTheFutureBoard">
       <h1>See The <span>Future</span></h1>
-      <div  class='explosive-kitten'></div>
-      <div  class='explosive-kitten'></div>
-      <div  class='explosive-kitten'></div>
+      <div  class='cardBox'></div>
+      <div  class='cardBox'></div>
+      <div  class='cardBox'></div>
     </div>
   </div>
 

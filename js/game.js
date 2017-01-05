@@ -12,7 +12,6 @@ function Game () {
   this.player = []
 }
 
-
 Game.prototype.startGame = function () {
   this.player.push(new Player(), new Player())
 
@@ -22,7 +21,7 @@ Game.prototype.startGame = function () {
     this.drawingPile.push(new SeeTheFutureCard())
     this.drawingPile.push(new AttackCard())
     this.drawingPile.push(new DrawFromBottomCard())
-    this.drawingPile.push(new FavorCard())
+   this.drawingPile.push(new FavorCard())
 
     if (i === 3) {
       this.drawingPile.push(new DefuseCard())
@@ -33,7 +32,7 @@ Game.prototype.startGame = function () {
   for (var i = 0; i < this.player.length; i++) {
     for (var j = 0; j < 4; j++) {
       this.player[i].cards.push(this.drawingPile[j])
-      this.drawingPile.shift()
+     this.drawingPile.shift()
     }
     this.player[i].cards.push(new DefuseCard())
   }
@@ -41,6 +40,7 @@ Game.prototype.startGame = function () {
   this.drawingPile.push(new ExplodingKittenCard())
   game.shuffle()
   console.log(this)
+  player1Timer()
 }
 
 Game.prototype.shuffle = function () {
@@ -55,21 +55,16 @@ Game.prototype.shuffle = function () {
 }
 
 Game.prototype.checkGameOver = function () {
-  if (this.player[0].cards.length === 0 || this.player[1].cards.length === 0) {
+  if (this.player[game.currentPlayer].cards.length === 0 ) {
     this.isGameOver = true
-    this.currentPlayer = 2
   }
-  this.whoWon()
+  return this.isGameOver
 }
 
 Game.prototype.whoWon = function () {
-  if (this.currentPlayer === 0) {
-    return 1
-  } else if (this.currentPlayer === 1) {
-    return 0
-  }
+  console.log('start');
+  return 1 - this.currentPlayer
 
-  this.currentPlayer = 2
 }
 
 Game.prototype.switchPlayer = function () {
@@ -78,7 +73,6 @@ Game.prototype.switchPlayer = function () {
     showYourTurn()
   } else {
     this.currentPlayer = 1
-
   }
 }
 
@@ -94,9 +88,10 @@ Game.prototype.restart = function () {
   this.player = []
   console.log('before', game)
   this.startGame()
-   updateNotice()
-   updateDisplay()
+  updateNotice()
+  updateDisplay()
   console.log(game)
+
 }
 
 Game.prototype.checkTurns = function () {
