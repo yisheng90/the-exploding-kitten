@@ -1,65 +1,34 @@
-# Your Project Name
+# GA-Project-1-The-Exploding-Kitten
 
-This is the starter code for WDI projects. Please update this README file with information specific to your project. Replace this paragraph for instance, with a short description of your project. Then update the sections below. Refer to your project specificaion for instructions on how to submit your projects.
+This application recreate a fun board game called  "Exploding Kitten".
+The player are able to play with the computer AI.
 
-## Getting Started
+## How to Play
 
-Provide instructions here about how to get your project running on our local machine. Do we just need to clone and open a certain file or do we need to install anything first.
+### Rules
 
-### Prerequisites
+1.Play a card from your hand by placing it FACE UP on top of the Discard Pile, and following the instructions on the card. Or play no cards at all; that's cool too.
 
-What is needed to install and run the project, how do we install them
+2.After you follow the instructions on a card, you can play more cards. You can play as many cards as you'd like.
 
-```
-Code example
-```
+3.Finally, end your turn by drawing a card from the Draw Pile into your hand and hoping it's not an Exploding Kitten.
 
-### How to Use
+### Cards type
 
-A step by step guide on how to install and use the project, for example if this is a game, how do we play it.
+* Exploding Kitten: Unless you have a DEFUSE CARD, you're dead.
+* Attack: End your turn(s) without drawing and force the next player to take 2 turns in a row. (If the victim of an ATTACK CARD plays an ATTACK CARD, their turns are immediately over, and the next player must take 2 turns.)
+* Skip: Immediately end your turn without drawing a card. If you play a SKIP CARD as a defense against an ATTACK CARD, it only ends one of the two turns. Two SKIP CARDS would end both turns.
+* Favor: Force any other player to give you 1 card from their hand. The cards is randomly assigned.
+* Shuffle: Shuffle the Draw Pile without viewing the cards until told to stop. (Useful when you know there's an EXPLODING KITTEN coming.)
+* See The Future: Peek at the top 3 cards from the Draw Pile.
+* Draw From Bottom: Draw a card from the bottom of Draw Pile.
+* Defuse: Save yourself from exploding.
 
+## Deployment
 
-```
-Code example
-```
+This app is deployed on https://yisheng90.github.io/GA-Project-1-The-Exploding-Kitten-/
 
-More steps...
+## Disclaimer
 
-```
-until finished
-```
-
-
-## Tests
-
-Did you write automated tests? If so, how do we run them.
-
-
-```
-Code example
-```
-
-## Live Version
-
-Where is this deployed online (github pages, heroku etc), give us the link and any access details we need.
-
-## Built With
-
-What did you use to build it, list the technologies, plugins, gems, packages etc.
-
-* [jQuery](http://jquery.com/) - jQuery for example is something you likely used
-
-## Workflow
-
-Did you write user stories, draw wireframes, use task tracking, produce ERDs? Did you use source control, with regular commits? Include links to them here.
-
-## Authors
-
-Did you collaborate with others on this project, list them here
-
-* **John McClain** - *Responsible for keeping vests white* - [GithubUserName](https://github.com/GithubUserName)
-
-## Acknowledgments
-
-* Hat tip to anyone who's code was used, for example [this was a useful starting point for creating this template](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2).
-
+This application is built for programming practice purposes only.
+This is not an official "Exploding Kittens" application. if you love the game, please visit  http://www.explodingkittens.com/ for more informations.
