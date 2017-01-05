@@ -3,9 +3,15 @@
 This application recreate a fun board game called  "Exploding Kitten".
 The player are able to play with the computer AI.
 
-## How to Play
+## Getting Started
+1. Clone the Repo
+2. Open index.html
+3. Have Fun
 
-### Rules
+
+### How to Use
+
+#### Rules
 
 1.Play a card from your hand by placing it FACE UP on top of the Discard Pile, and following the instructions on the card. Or play no cards at all; that's cool too.
 
@@ -13,7 +19,7 @@ The player are able to play with the computer AI.
 
 3.Finally, end your turn by drawing a card from the Draw Pile into your hand and hoping it's not an Exploding Kitten.
 
-### Cards type
+#### Cards type
 
 * Exploding Kitten: Unless you have a DEFUSE CARD, you're dead.
 * Attack: End your turn(s) without drawing and force the next player to take 2 turns in a row. (If the victim of an ATTACK CARD plays an ATTACK CARD, their turns are immediately over, and the next player must take 2 turns.)
@@ -24,11 +30,24 @@ The player are able to play with the computer AI.
 * Draw From Bottom: Draw a card from the bottom of Draw Pile.
 * Defuse: Save yourself from exploding.
 
-## Deployment
+## Live Version
 
 This app is deployed on https://yisheng90.github.io/GA-Project-1-The-Exploding-Kitten-/
 
-## Disclaimer
+## Built With
+
+* [jQuery](http://jquery.com/)
+* JavaScript
+* css
+* html
+* Graphic by Pixelmator
+
+
+## Authors
+
+* **Lee Yi Sheng** - *Responsible for keeping vests white* - [yisheng90](https://github.com/yisheng90)
+
+## Acknowledgments
 
 This application is built for programming practice purposes only.
 This is not an official "Exploding Kittens" application. if you love the game, please visit  http://www.explodingkittens.com/ for more informations.
