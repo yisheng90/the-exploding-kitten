@@ -1,4 +1,4 @@
-# GA-Project-1-The-Exploding-Kitten
+# The Exploding Kitten
 
 This application recreate a fun board game called  "Exploding Kitten".
 The player are able to play with the computer AI.
@@ -42,10 +42,17 @@ This app is deployed on https://yisheng90.github.io/GA-Project-1-The-Exploding-K
 ## Built With
 
 * [jQuery](http://jquery.com/)
-* JavaScript
+* JavaScript   
 * css
 * html
 * Graphic by Pixelmator
+
+## Workflow
+
+* Day 1     : Drafting the basic game structure.
+* Day 2 - 4 : Coding game logics.
+* Day 5     : Implement game graphic.
+* Day 6 - 14: Debug.
 
 
 ## Authors
