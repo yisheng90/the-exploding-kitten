@@ -11,7 +11,7 @@ The player are able to play with the computer AI.
 
 
 ### How to Use
-<img src="http://i.giphy.com/l3q2G4bfqB7okjfR6.gif"/>
+![Alt text]("http://i.giphy.com/l3q2G4bfqB7okjfR6.gif")
 #### Rules
 
 
